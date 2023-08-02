@@ -12,8 +12,15 @@
 	
 	<jsp:include page="../include/navbar.jsp"/>
 	
-	<div class="container">
-		
+	<div class="container" style="height: 700px">
+		<div class="row">
+			<div class="col m2">
+				
+			</div>
+			<div class="col m10">
+			
+			</div>
+		</div>
 	</div>
 	
 	<jsp:include page="../include/footer.jsp"/>
