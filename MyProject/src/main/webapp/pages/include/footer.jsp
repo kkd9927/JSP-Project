@@ -12,11 +12,11 @@
 	<div class="container">
 		<div class="row">
 			<div class="col l6 s12">
-				<h5 class="white-text">Comb</h5>
+				<h5 class="white-text">About Developer</h5>
 				<p class="grey-text text-lighten-4">
 					<i class="material-icons valign-wrapper">email</i> kkd9927@naver.com<br>
 					<i class="material-icons valign-wrapper">phone</i> 010-9927-1057<br>
-					<i class="bi bi-github"></i> <a href="https://github.com/kkd9927" target="_blank" class="white-text">github.com/kkd9927</a>
+					<i class="bi bi-github"></i> <a href="https://github.com/kkd9927" target="_blank" class="grey-text text-lighten-4">github.com/kkd9927</a>
 				</p>
 			</div>
 			<div class="col l4 offset-l2 s12">

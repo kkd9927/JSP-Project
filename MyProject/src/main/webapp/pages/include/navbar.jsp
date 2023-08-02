@@ -27,7 +27,7 @@
 
 <nav class="row yellow darken-2">
 	<div class="col m4">
-		<a href="#"><img src="../../resource/images/logo.png" width="50" height="50" style="margin-top: 7px"></a>
+		<a href="../main/main.jsp"><img src="../../resource/images/logo.png" width="50" height="50" style="margin-top: 7px"></a>
 	</div>
 	
    	<div class="nav-wrapper col m4">

@@ -80,17 +80,17 @@
 			<div class="col m9">
 <!-- 			카테고리 -->
 				<div class="content">
-					<a class="btn yellow darken-3">전체</a>
-					<a class="btn yellow darken-3">카테고리2</a>
-					<a class="btn yellow darken-3">카테고리3</a>
-					<a class="btn yellow darken-3">카테고리4</a>
-					<a class="btn yellow darken-3">카테고리5</a>
-					<a class="btn yellow darken-3">카테고리6</a>
-					<a class="btn yellow darken-3">카테고리7</a>
-					<a class="btn yellow darken-3">카테고리8</a>
-					<a class="btn yellow darken-3">카테고리9</a>
-					<a class="btn yellow darken-3">카테고리10</a>
-					<a class="btn yellow darken-3">카테고리11</a>
+					<a class="btn z-depth-0 yellow darken-3">전체</a>
+					<a class="btn z-depth-0 yellow darken-3">카테고리</a>
+					<a class="btn z-depth-0 yellow darken-3">카테고리</a>
+					<a class="btn z-depth-0 yellow darken-3">카테고리</a>
+					<a class="btn z-depth-0 yellow darken-3">카테고리</a>
+					<a class="btn z-depth-0 yellow darken-3">카테고리</a>
+					<a class="btn z-depth-0 yellow darken-3">카테고리</a>
+					<a class="btn z-depth-0 yellow darken-3">카테고리</a>
+					<a class="btn z-depth-0 yellow darken-3">카테고리</a>
+					<a class="btn z-depth-0 yellow darken-3">카테고리</a>
+					<a class="btn z-depth-0 yellow darken-3">카테고리</a>
 				</div>
 				
 <!-- 			게시판 표시 -->
