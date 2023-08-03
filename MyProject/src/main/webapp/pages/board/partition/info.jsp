@@ -3,7 +3,7 @@
 <div class="card b-info">
 	<div class="card-image b-info-imgcon">
 		<div class="b-info-imgbox">
-			<img src="../../resource/images/sample.jpg">
+			<img src="/MyProject/resource/images/sample.jpg">
 		</div>
 	</div>
 	
@@ -13,7 +13,7 @@
 			카테고리<br><br>
 			<a href="#" class="black-text">
 				<span class="btn-floating btn-small">
-					<img src="../../resource/images/basic_profile_img.jpg">
+					<img src="/MyProject/resource/images/basic_profile_img.jpg">
 				</span>
 				@관리자_닉네임
 			</a>

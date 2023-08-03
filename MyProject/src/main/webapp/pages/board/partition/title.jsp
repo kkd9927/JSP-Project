@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <div class="card b-title z-depth-0">
 	<div class="card-image">
-		<img src="../../resource/images/sample.jpg" height="300">
+		<img src="/MyProject/resource/images/sample.jpg" height="300">
 		<span class="card-title"><b>게시판 이름</b></span>
 	</div>
 	
