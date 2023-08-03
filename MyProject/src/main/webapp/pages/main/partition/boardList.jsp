@@ -4,7 +4,7 @@
 	<div class="col m6 l4">
 		<div class="card">
 		    <div class="card-image waves-effect waves-block waves-light">
-		    	<img class="activator" src="/MyProject/resource/images/sample.jpg">
+		    	<img class="activator" src="/JSP_Project/resource/images/sample.jpg">
 		    </div>
 		    <div class="card-content">
 		    	<span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">add</i></span>
@@ -20,7 +20,7 @@
 	<div class="col m6 l4">
 		<div class="card">
 		    <div class="card-image waves-effect waves-block waves-light">
-		    	<img class="activator" src="/MyProject/resource/images/sample.jpg">
+		    	<img class="activator" src="/JSP_Project/resource/images/sample.jpg">
 		    </div>
 		    <div class="card-content">
 		    	<span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">add</i></span>
@@ -36,7 +36,7 @@
 	<div class="col m6 l4">
 		<div class="card">
 		    <div class="card-image waves-effect waves-block waves-light">
-		    	<img class="activator" src="/MyProject/resource/images/sample.jpg">
+		    	<img class="activator" src="/JSP_Project/resource/images/sample.jpg">
 		    </div>
 		    <div class="card-content">
 		    	<span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">add</i></span>
@@ -52,7 +52,7 @@
 	<div class="col m6 l4">
 		<div class="card">
 		    <div class="card-image waves-effect waves-block waves-light">
-		    	<img class="activator" src="/MyProject/resource/images/sample.jpg">
+		    	<img class="activator" src="/JSP_Project/resource/images/sample.jpg">
 		    </div>
 		    <div class="card-content">
 		    	<span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">add</i></span>
@@ -68,7 +68,7 @@
 	<div class="col m6 l4">
 		<div class="card">
 		    <div class="card-image waves-effect waves-block waves-light">
-		    	<img class="activator" src="/MyProject/resource/images/sample.jpg">
+		    	<img class="activator" src="/JSP_Project/resource/images/sample.jpg">
 		    </div>
 		    <div class="card-content">
 		    	<span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">add</i></span>
@@ -84,7 +84,7 @@
 	<div class="col m6 l4">
 		<div class="card">
 		    <div class="card-image waves-effect waves-block waves-light">
-		    	<img class="activator" src="/MyProject/resource/images/sample.jpg">
+		    	<img class="activator" src="/JSP_Project/resource/images/sample.jpg">
 		    </div>
 		    <div class="card-content">
 		    	<span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">add</i></span>

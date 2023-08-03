@@ -7,7 +7,7 @@
 			<a href="#" class="black-text">
 				@작성자_닉네임
 				<span class="btn-floating btn-small">
-					<img src="/MyProject/resource/images/basic_profile_img.jpg">
+					<img src="/JSP_Project/resource/images/basic_profile_img.jpg">
 				</span>
 			</a>
 		</p>
@@ -16,9 +16,9 @@
 	<div class="card-content b-content">
 <!-- 사진 있을경우 -->
 		<div class="carousel carousel-slider">
-			<a href="/MyProject/resource/images/sample.jpg" target="_blank" class="carousel-item"><img src="/MyProject/resource/images/sample.jpg"></a>
-			<a href="/MyProject/resource/images/sample.jpg" target="_blank" class="carousel-item"><img src="/MyProject/resource/images/sample.jpg"></a>
-			<a href="/MyProject/resource/images/sample.jpg" target="_blank" class="carousel-item"><img src="/MyProject/resource/images/sample.jpg"></a>
+			<a href="/JSP_Project/resource/images/sample.jpg" target="_blank" class="carousel-item"><img src="/JSP_Project/resource/images/sample.jpg"></a>
+			<a href="/JSP_Project/resource/images/sample.jpg" target="_blank" class="carousel-item"><img src="/JSP_Project/resource/images/sample.jpg"></a>
+			<a href="/JSP_Project/resource/images/sample.jpg" target="_blank" class="carousel-item"><img src="/JSP_Project/resource/images/sample.jpg"></a>
 		</div>
 		
 		<p>글 내용</p>
@@ -42,7 +42,7 @@
 			<p>
 				<a href="#" class="black-text">
 					<span class="btn-floating btn-small">
-						<img src="/MyProject/resource/images/basic_profile_img.jpg">
+						<img src="/JSP_Project/resource/images/basic_profile_img.jpg">
 					</span>
 					@작성자_닉네임
 				</a>

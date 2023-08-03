@@ -17,7 +17,7 @@
 <!-- 운영중인 게시판이 있을때 -->
 <div class="card">
     <div class="card-image">
-        <img src="/MyProject/resource/images/sample.jpg">
+        <img src="/JSP_Project/resource/images/sample.jpg">
         <span class="card-title">Card Title</span>
     </div>
     <div class="card-content">

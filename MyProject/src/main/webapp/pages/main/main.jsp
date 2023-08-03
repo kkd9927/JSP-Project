@@ -7,7 +7,7 @@
 <title>Main</title>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link href="/MyProject/pages/main/css/main.css" rel="stylesheet">
+<link href="/JSP_Project/pages/main/css/main.css" rel="stylesheet">
 </head>
 <body>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>

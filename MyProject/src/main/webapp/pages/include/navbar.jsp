@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<link href="/MyProject/pages/include/css/navbar.css" rel="stylesheet">
-<script src="/MyProject/pages/include/js/navbar.js"></script>
+<link href="/JSP_Project/pages/include/css/navbar.css" rel="stylesheet">
+<script src="/JSP_Project/pages/include/js/navbar.js"></script>
 
 <nav class="row z-depth-0 yellow darken-2">
 	<div class="col m4">
-		<a href="/MyProject/pages/main/main.jsp"><img src="/MyProject/resource/images/logo.png" width="50" height="50" style="margin-top: 7px"></a>
+		<a href="/JSP_Project/pages/main/main.jsp"><img src="/JSP_Project/resource/images/logo.png" width="50" height="50" style="margin-top: 7px"></a>
 	</div>
 	
    	<div class="nav-wrapper col m4">
@@ -28,7 +28,7 @@
 <!-- 로그인 후 -->
 			<div class="fixed-action-btn navbar-action-btn">
 				<a class="btn-floating click-to-toggle btn-large red z-depth-0">
-					<img src="/MyProject/resource/images/basic_profile_img.jpg" class="circle responsive-img" style="width: 100%; height: 100%">
+					<img src="/JSP_Project/resource/images/basic_profile_img.jpg" class="circle responsive-img" style="width: 100%; height: 100%">
 				</a>
 				<ul>
 					<li><a href="#" class="btn-floating tooltipped nav-tooltip red" data-position="left" data-tooltip="로그아웃"><i class="material-icons">exit_to_app</i></a></li>
