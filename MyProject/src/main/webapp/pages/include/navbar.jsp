@@ -1,33 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<style>
-	.navbar-action-btn {
-		position: absolute;
-		right: 1%;
- 		top: -2px;
- 		padding: 0px;
-	}
-</style>
-<script type="text/javascript">
-	document.addEventListener('DOMContentLoaded', function() {
-		var elems = document.querySelectorAll('.navbar-action-btn');
-		var instances = M.FloatingActionButton.init(elems, {
-			direction: 'bottom',
-			hoverEnabled: false
-		});
-	});
-	
-	document.addEventListener('DOMContentLoaded', function() {
-		var elems = document.querySelectorAll('.nav-tooltip');
-		var instances = M.Tooltip.init(elems, {
-			position: 'left'
-		});
-	});
-</script>
+<link href="/MyProject/pages/include/css/navbar.css" rel="stylesheet">
+<script src="/MyProject/pages/include/js/navbar.js"></script>
 
 <nav class="row z-depth-0 yellow darken-2">
 	<div class="col m4">
-		<a href="../main/main.jsp"><img src="../../resource/images/logo.png" width="50" height="50" style="margin-top: 7px"></a>
+		<a href="/MyProject/pages/main/main.jsp"><img src="/MyProject/resource/images/logo.png" width="50" height="50" style="margin-top: 7px"></a>
 	</div>
 	
    	<div class="nav-wrapper col m4">
@@ -50,7 +28,7 @@
 <!-- 로그인 후 -->
 			<div class="fixed-action-btn navbar-action-btn">
 				<a class="btn-floating click-to-toggle btn-large red z-depth-0">
-					<img src="../../resource/images/basic_profile_img.jpg" class="circle responsive-img" style="width: 100%; height: 100%">
+					<img src="/MyProject/resource/images/basic_profile_img.jpg" class="circle responsive-img" style="width: 100%; height: 100%">
 				</a>
 				<ul>
 					<li><a href="#" class="btn-floating tooltipped nav-tooltip red" data-position="left" data-tooltip="로그아웃"><i class="material-icons">exit_to_app</i></a></li>

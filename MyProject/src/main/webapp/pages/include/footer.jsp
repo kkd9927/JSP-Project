@@ -1,12 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-
-<style>
-	.bi-github {
-		font-size: 23px;
-	}
-</style>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+<link href="/MyProject/pages/include/css/footer.css" rel="stylesheet">
 
 <footer class="page-footer yellow darken-2">
 	<div class="container">
