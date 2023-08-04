@@ -11,7 +11,7 @@
 </head>
 <body>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-	<script src="/JSP_Project/pages/board/js/board.js"></script>
+	<script src="/MyProject/pages/board/js/board.js"></script>
 	
 	<jsp:include page="/pages/include/navbar.jsp"/>
 

@@ -7,7 +7,7 @@
 <title>Main</title>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link href="/JSP_Project/pages/main/css/main.css" rel="stylesheet">
+<link href="/MyProject/pages/main/css/main.css" rel="stylesheet">
 </head>
 <body>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
@@ -16,12 +16,17 @@
 	
 	<div class="container">
 		<div class="row">
-			<div class="col m3">
+			<div class="col s3">
 				<jsp:include page="/pages/main/partition/userInfo.jsp"/>
 			</div>
 			
-			<div class="col m9">
+			<div class="col s6">
  				<jsp:include page="/pages/main/partition/category.jsp"/>
+			</div>
+			
+			<div class="col s3"></div>
+			
+			<div class="col s12">
 				<jsp:include page="/pages/main/partition/boardList.jsp"/>
 				<jsp:include page="/pages/main/partition/pagination.jsp"/>
 			</div>

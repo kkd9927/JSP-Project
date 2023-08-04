@@ -5,8 +5,8 @@
 .title-action-btn {
 	position: absolute;
 	right: 1%;
-		bottom: 4%;
-		padding: 0px;
+	bottom: 4%;
+	padding: 0px;
 }
 
 .b-info {
@@ -76,4 +76,16 @@
 .b-container .b-comment .b-comment-line {
 	padding-top: 5px;
 	padding-bottom: 5px;
+}
+
+.collapsible {
+	border: 0;	
+}
+
+.collapsible-header {
+	border: 0;
+}
+
+.collapsible-body {
+	border: 0;
 }
