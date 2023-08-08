@@ -40,24 +40,59 @@ public class UserDAO {
 			pstmt.setString(4, imgPath);
 			
 			int rs = pstmt.executeUpdate();
-			
-			dbClose();
 		} catch(Exception e) {
 			
 		}
+		
+		dbClose();
 	}
 	
-	private void dbClose() throws SQLException, ClassNotFoundException {
-		if(rs != null) {
-			rs.close();
+	public UserDTO loginUser(String id, String pw) {
+		UserDTO dto = new UserDTO();
+		String sql = "SELECT * FROM USER_LIST WHERE USER_ID = ? AND USER_PW = ?";
+		
+		try {
+			conn = DBConnection.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setString(2, pw);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				dto.setId(rs.getString("USER_ID"));
+				dto.setPw(rs.getString("USER_PW"));
+				dto.setNickname(rs.getString("NICKNAME"));
+				dto.setProfileImg(rs.getString("PROFILE_IMG"));
+				dto.setManageBoard(rs.getString("MANAGE_BOARD"));
+				
+				return dto;
+			}
+			
+		} catch(Exception e) {
+			
 		}
 		
-		if(pstmt != null) {
-			pstmt.close();
-		}
+		dbClose();
 		
-		if(conn != null) {
-			conn.close();
+		return null;
+	}
+	
+	private void dbClose() {
+		try {
+			if(rs != null) {
+				rs.close();
+			}
+			
+			if(pstmt != null) {
+				pstmt.close();
+			}
+			
+			if(conn != null) {
+				conn.close();
+			}
+		} catch(SQLException e) {
+			
 		}
 	}
 }

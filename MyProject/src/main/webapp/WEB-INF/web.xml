@@ -7,6 +7,6 @@
 
 	<servlet-mapping>
 		<servlet-name>UserController</servlet-name>
-		<url-pattern>/pages/account/*</url-pattern>
+		<url-pattern>*.user</url-pattern>
 	</servlet-mapping>
 </web-app>

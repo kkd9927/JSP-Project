@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Board</title>
+<title>회원가입</title>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link href="/MyProject/pages/board/css/board.css" rel="stylesheet">
@@ -12,6 +12,12 @@
 <body>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 	<script src="/MyProject/pages/board/js/board.js"></script>
+
+	<script type="text/javascript">
+		function signupCheck() {
+			document.signupForm.submit();
+		}
+	</script>
 
 	<jsp:include page="/pages/include/navbar.jsp" />
 
@@ -25,7 +31,7 @@
 		<div class="row">
 			<div class="col s3"></div>
 
-			<form action="/MyProject/pages/account/signupSend" method="post" enctype="multipart/form-data" class="col s6">
+			<form action="/MyProject/pages/user/signupSend.user" method="post" name="signupForm" enctype="multipart/form-data" class="col s6">
 				<div class="row">
 					<div class="input-field col s12">
 						<input id="id" name="id" type="text">
@@ -68,11 +74,11 @@
 				
 				<div class="row">
 					<div class="col s6 left-align">
-						<a href="/pages/main/main.jsp" class="btn-large z-depth-0 blue-grey lighten-2">취소</a>
+						<a href="/MyProject/pages/main/main.jsp" class="btn-large z-depth-0 blue-grey lighten-2">취소</a>
 					</div>
 					
 					<div class="col s6 right-align">
-						<a onClick="" class="btn-large z-depth-0 yellow darken-3">가입하기</a>
+						<a onClick="signupCheck()" class="btn-large z-depth-0 yellow darken-3">가입하기</a>
 					</div>				
 				</div>
 			</form>

@@ -1,14 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="mvc.user.model.UserDTO" %>
-<%
-	UserDTO userInfo = (UserDTO)session.getAttribute("UserInfo");
-%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Main</title>
+<title>검색결과</title>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link href="/MyProject/pages/main/css/main.css" rel="stylesheet">
@@ -20,20 +16,19 @@
 	
 	<div class="container">
 		<div class="row">
-			<div class="col s3">
-				<jsp:include page="/pages/main/partition/userBoard.jsp"/>
-			</div>
+			<div class="col s3"></div>
 			
 			<div class="col s6">
- 				<jsp:include page="/pages/main/partition/category.jsp"/>
+				<div class="valign-wrapper center-align" style="height: 600px">
+					<h3>회원가입이 완료되었습니다.</h3>
+				</div>
+				<div class="center-align">
+					<a href="/MyProject/pages/user/login.user" class="btn-large z-depth-0 yellow darken-3">로그인</a>
+					<a href="/MyProject/pages/main/main.jsp" class="btn-large z-depth-0 yellow darken-3">메인으로</a>
+				</div>
 			</div>
 			
 			<div class="col s3"></div>
-			
-			<div class="col s12">
-				<jsp:include page="/pages/main/partition/boardList.jsp"/>
-				<jsp:include page="/pages/main/partition/pagination.jsp"/>
-			</div>
 		</div>
 	</div>
 	
