@@ -25,7 +25,7 @@
 		<div class="row">
 			<div class="col s3"></div>
 
-			<form action="account/signup" method="post" class="col s6">
+			<form action="/MyProject/pages/account/signupSend" method="post" enctype="multipart/form-data" class="col s6">
 				<div class="row">
 					<div class="input-field col s12">
 						<input id="id" name="id" type="text">
@@ -57,7 +57,7 @@
 					<div class="file-field input-field col s12">
 						<div class="btn z-depth-0 yellow darken-3">
 							<span>File</span>
-							<input type="file">
+							<input type="file" name="profileImg">
 						</div>
 						
 						<div class="file-path-wrapper">

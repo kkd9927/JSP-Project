@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" version="4.0">
-	
+	<servlet>
+		<servlet-name>UserController</servlet-name>
+		<servlet-class>mvc.user.controller.UserController</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>UserController</servlet-name>
+		<url-pattern>/pages/account/*</url-pattern>
+	</servlet-mapping>
 </web-app>

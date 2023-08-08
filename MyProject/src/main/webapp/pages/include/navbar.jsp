@@ -16,27 +16,26 @@
 				<i class="material-icons">close</i>
 	        </div>
      	</form>
-  	
   	</div>
   	
 	<div class="col m4">
 		<div class="right">
 <!-- 로그인 전 -->
-<!-- 		<a href="#" class="btn white z-depth-0">로그인</a> -->
-<!-- 		<a href="#" class="btn white z-depth-0">회원가입</a> -->
+			<a href="/MyProject/pages/account/login" class="btn white z-depth-0">로그인</a>
+			<a href="/MyProject/pages/account/signup" class="btn white z-depth-0">회원가입</a>
 
 <!-- 로그인 후 -->
-			<div class="fixed-action-btn navbar-action-btn">
-				<a class="btn-floating click-to-toggle btn-large red z-depth-0">
-					<img src="/MyProject/resource/images/basic_profile_img.jpg" class="circle responsive-img" style="width: 100%; height: 100%">
-				</a>
-				<ul>
-					<li><a href="#" class="btn-floating tooltipped nav-tooltip red" data-position="left" data-tooltip="로그아웃"><i class="material-icons">exit_to_app</i></a></li>
-					<li><a href="#" class="btn-floating tooltipped nav-tooltip yellow darken-1" data-position="left" data-tooltip="게시판 생성"><i class="material-icons">edit</i></a></li>
-					<li><a href="#" class="btn-floating tooltipped nav-tooltip green" data-position="left" data-tooltip="게시판 목록"><i class="material-icons">view_list</i></a></li>
-					<li><a href="#" class="btn-floating tooltipped nav-tooltip blue" data-position="left" data-tooltip="내 정보"><i class="material-icons">person</i></a></li>
-				</ul>
-			</div>
+<!-- 			<div class="fixed-action-btn navbar-action-btn"> -->
+<!-- 				<a class="btn-floating click-to-toggle btn-large red z-depth-0"> -->
+<!-- 					<img src="/MyProject/resource/images/basic_profile_img.jpg" class="circle responsive-img" style="width: 100%; height: 100%"> -->
+<!-- 				</a> -->
+<!-- 				<ul> -->
+<!-- 					<li><a href="#" class="btn-floating tooltipped nav-tooltip red" data-position="left" data-tooltip="로그아웃"><i class="material-icons">exit_to_app</i></a></li> -->
+<!-- 					<li><a href="#" class="btn-floating tooltipped nav-tooltip yellow darken-1" data-position="left" data-tooltip="게시판 생성"><i class="material-icons">edit</i></a></li> -->
+<!-- 					<li><a href="#" class="btn-floating tooltipped nav-tooltip green" data-position="left" data-tooltip="게시판 목록"><i class="material-icons">view_list</i></a></li> -->
+<!-- 					<li><a href="#" class="btn-floating tooltipped nav-tooltip blue" data-position="left" data-tooltip="내 정보"><i class="material-icons">person</i></a></li> -->
+<!-- 				</ul> -->
+<!-- 			</div> -->
 		</div>
  	</div>
 </nav>
