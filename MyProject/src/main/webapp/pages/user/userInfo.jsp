@@ -28,7 +28,7 @@
 		
 		<div class="row">
 			<div class="col s12 center-align">
-				<img src="/MyProject/resource/images/basic_profile_img.jpg" width="150" height="150" class="circle">
+				<img src="/MyProject/upload/profile/<%= userInfo.getProfileImg() %>" width="150" height="150" class="circle">
 			</div>
 			
 			<div class="col s12 center-align">

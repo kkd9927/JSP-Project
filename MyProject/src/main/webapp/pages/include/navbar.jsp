@@ -34,7 +34,7 @@
 			%>
 			<div class="fixed-action-btn navbar-action-btn">
 				<a class="btn-floating click-to-toggle btn-large red z-depth-0">
-					<img src="/MyProject/resource/images/basic_profile_img.jpg" class="circle responsive-img" style="width: 100%; height: 100%">
+					<img src="/MyProject/upload/profile/<%= userInfo.getProfileImg() %>" class="circle responsive-img" style="width: 100%; height: 100%">
 				</a>
 				<ul>
 					<li><a href="/MyProject/pages/user/logout.user" class="btn-floating tooltipped nav-tooltip red" data-position="left" data-tooltip="로그아웃"><i class="material-icons">exit_to_app</i></a></li>

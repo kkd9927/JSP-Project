@@ -50,8 +50,13 @@ public class UserController extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher("/pages/user/editForm.jsp");
 			rd.forward(request, response);
 		} else if(command.equals("/pages/user/editInfoSend.user")) {
+			requestUserUpdate(request);
 			RequestDispatcher rd = request.getRequestDispatcher("/pages/user/userInfo.jsp");
 			rd.forward(request, response); 
+		} else if(command.equals("/pages/user/delete.user")) {
+			requestUserDelete(request);
+			RequestDispatcher rd = request.getRequestDispatcher("deleteResult.jsp");
+			rd.forward(request, response);
 		} else if(command.equals("/pages/user/logout.user")) {
 			requestLogOut(request);
 			RequestDispatcher rd = request.getRequestDispatcher("/pages/main/main.jsp");
@@ -75,32 +80,17 @@ public class UserController extends HttpServlet {
 		String id = multi.getParameter("id");
 		String pw = multi.getParameter("pw");
 		String nickname = multi.getParameter("nickname");
-		String imgPath = "";
+		String imgName = "";
 		String fileName = multi.getOriginalFileName("profileImg");
 		
 		if(fileName != null) {
-			//파일 확장자 추출
-			String nameArr[] = fileName.split("\\.");
-			String extension = nameArr[1];
-			
-			String oldFilePath = filePath + "\\" + fileName;
-			String newFilePath = filePath + "\\" + id + "_img." + extension;
-			
-			File oldFile = new File(oldFilePath);
-			File newFile = new File(newFilePath);
-			
-			if(newFile.exists()) {
-				newFile.delete();
-			}
-			
-			oldFile.renameTo(newFile);
-			imgPath = newFilePath;
+			imgName = renameFile(fileName, filePath, id);
 		}
 		
 		dto.setId(id);
 		dto.setPw(pw);
 		dto.setNickname(nickname);
-		dto.setProfileImg(imgPath);
+		dto.setProfileImg(imgName);
 		
 		dao.insertUser(dto);
 	}
@@ -114,7 +104,7 @@ public class UserController extends HttpServlet {
 		String id = request.getParameter("id");
 		String pw = request.getParameter("pw");
 		
-		user = dao.loginUser(id, pw);
+		user = dao.getUser(id, pw);
 		
 		session.setAttribute("UserInfo", user);
 		
@@ -130,7 +120,80 @@ public class UserController extends HttpServlet {
 		session.invalidate();
 	}
 	
-	private void requestUserUpdate(HttpServletRequest request) {
+	private void requestUserUpdate(HttpServletRequest request) throws IOException {
+		UserDAO dao = UserDAO.getInstance();
+		UserDTO dto = new UserDTO();
 		
+		String filePath = getServletContext().getRealPath("/") + "upload\\profile";
+		int fileSize = 5 * 1024 * 1024;
+		
+		MultipartRequest multi = new MultipartRequest(request, filePath, fileSize, "UTF-8", new DefaultFileRenamePolicy());
+		
+		String id = multi.getParameter("id");
+		String pw = multi.getParameter("pw");
+		String nickname = multi.getParameter("nickname");
+		String imgName = "";
+		String fileName = multi.getOriginalFileName("profileImg");
+		
+		if(fileName != null) {
+			imgName = renameFile(fileName, filePath, id);
+		}
+		
+		dto.setId(id);
+		dto.setPw(pw);
+		dto.setNickname(nickname);
+		dto.setProfileImg(imgName);
+		
+		dao.updateUser(dto);
+		
+		// 기존 로그인 정보 삭제 후 변경된 정보로 업데이트
+		UserDTO user = new UserDTO();
+		HttpSession session = request.getSession();
+		session.removeAttribute("UserInfo");
+		
+		user = dao.getUser(id, pw);
+		
+		session.setAttribute("UserInfo", user);
+	}
+	
+	private void requestUserDelete(HttpServletRequest request) {
+		UserDAO dao = UserDAO.getInstance();
+		UserDTO user = null;
+		
+		String id = request.getParameter("id");
+		
+		// id로 유저 객체를 들고와 파일 경로의 이미지 삭제
+		user = dao.getUser(id, null);
+		
+		String filePath = getServletContext().getRealPath("/") + "upload\\profile";
+		File img = new File(filePath + "\\" + user.getProfileImg());
+		img.delete();
+		
+		dao.deleteUser(id);
+		
+		// 회원탈퇴 후 기존 로그인정보 삭제
+		HttpSession session = request.getSession();
+		session.invalidate();
+	}
+	
+	private String renameFile(String fileName, String filePath, String id) {
+		// 확장자 추출
+		String nameArr[] = fileName.split("\\.");
+		String extension = nameArr[1];
+		
+		String oldFilePath = filePath + "\\" + fileName;
+		String newFilePath = filePath + "\\" + id + "_img." + extension; // 파일명 id_img.extension
+		String newFileName = id + "_img." + extension;
+		
+		File oldFile = new File(oldFilePath);
+		File newFile = new File(newFilePath);
+		
+		if(newFile.exists()) {
+			newFile.delete();
+		}
+		
+		oldFile.renameTo(newFile);
+		
+		return newFileName;
 	}
 }

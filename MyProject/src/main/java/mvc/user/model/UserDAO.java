@@ -47,15 +47,25 @@ public class UserDAO {
 		dbClose();
 	}
 	
-	public UserDTO loginUser(String id, String pw) {
+	public UserDTO getUser(String id, String pw) {
 		UserDTO dto = new UserDTO();
-		String sql = "SELECT * FROM USER_LIST WHERE USER_ID = ? AND USER_PW = ?";
+		String sql = "";
 		
 		try {
-			conn = DBConnection.getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, id);
-			pstmt.setString(2, pw);
+			if(pw != null) {
+				sql = "SELECT * FROM USER_LIST WHERE USER_ID = ? AND USER_PW = ?";
+
+				conn = DBConnection.getConnection();
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, id);
+				pstmt.setString(2, pw);
+			} else {
+				sql = "SELECT * FROM USER_LIST WHERE USER_ID = ?";
+
+				conn = DBConnection.getConnection();
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, id);
+			}
 			
 			rs = pstmt.executeQuery();
 			
@@ -76,6 +86,46 @@ public class UserDAO {
 		dbClose();
 		
 		return null;
+	}
+	
+	public void updateUser(UserDTO user) {
+		String sql = "UPDATE USER_LIST SET USER_PW = ?, NICKNAME = ?, PROFILE_IMG = ? WHERE USER_ID = ?";
+		
+		String id = user.getId();
+		String pw = user.getPw();
+		String nickname = user.getNickname();
+		String imgPath = user.getProfileImg();
+		
+		try {
+			conn = DBConnection.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, pw);
+			pstmt.setString(2, nickname);
+			pstmt.setString(3, imgPath);
+			pstmt.setString(4, id);
+			
+			int rs = pstmt.executeUpdate();
+		} catch(Exception e) {
+			
+		}
+		
+		dbClose();
+	}
+	
+	public void deleteUser(String id) {
+		String sql = "DELETE FROM USER_LIST WHERE USER_ID = ?";
+		
+		try {
+			conn = DBConnection.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			
+			int rs = pstmt.executeUpdate();
+		} catch(Exception e) {
+			
+		}
+		
+		dbClose();
 	}
 	
 	private void dbClose() {

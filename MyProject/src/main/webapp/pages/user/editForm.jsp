@@ -1,10 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="mvc.user.model.UserDTO" %>
+<%
+	UserDTO userInfo = (UserDTO)session.getAttribute("UserInfo");
+	String id = userInfo.getId();
+	String pw = userInfo.getPw();
+	String nickname = userInfo.getNickname();
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원가입</title>
+<title>정보수정</title>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link href="/MyProject/pages/board/css/board.css" rel="stylesheet">
@@ -12,50 +19,50 @@
 <body>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 	<script src="/MyProject/pages/board/js/board.js"></script>
-
-	<script type="text/javascript">
-		function signupCheck() {
-			document.signupForm.submit();
-		}
-	</script>
+	<script src="/MyProject/pages/user/js/user.js"></script>
 
 	<jsp:include page="/pages/include/navbar.jsp" />
 
 	<div class="container">
 		<div class="row">
 			<div class="col s12 center-align">
-				<h1>회원가입</h1>
+				<h1>정보수정</h1>
 			</div>
 		</div>
 		
 		<div class="row">
+			<div class="col s12 center-align">
+				<img src="/MyProject/upload/profile/<%= userInfo.getProfileImg() %>" width="150" height="150" class="circle">
+				<br>
+			</div>
+			
 			<div class="col s3"></div>
-
-			<form action="/MyProject/pages/user/signupSend.user" method="post" name="signupForm" enctype="multipart/form-data" class="col s6">
+			
+			<form action="/MyProject/pages/user/editInfoSend.user" method="post" name="editForm" enctype="multipart/form-data" class="col s6">
 				<div class="row">
 					<div class="input-field col s12">
-						<input id="id" name="id" type="text">
+						<input id="id" name="id" type="text" value="<%= userInfo.getId() %>" readonly>
 						<label for="id">아이디</label>
 					</div>
 				</div>
 
 				<div class="row">
-					<div class="input-field col s6">
-						<input id="pw" name="pw" type="password">
+					<div class="input-field col s10">
+						<input id="pw" name="pw" type="password" value="<%= userInfo.getPw() %>" readonly>
 						<label for="pw">비밀번호</label>
-						<span class="helper-text" data-error="wrong" data-success="right">영문 대/소문자 및 숫자 조합 8자 이상</span>
 					</div>
-					
-					<div class="input-field col s6">
-						<input id="check_pw" type="password">
-						<label for="check_pw">비밀번호 확인</label>
+					<div class="col s2">
+						<button type="button" id="change_pw" onClick="btnChangeState(this)" class="btn-small z-depth-0 yellow darken-3">변경</button>
 					</div>
 				</div>
 
 				<div class="row">
-					<div class="input-field col s12">
-						<input id="nickname" name="nickname" type="text">
+					<div class="input-field col s10">
+						<input id="nickname" name="nickname" type="text" value="<%= userInfo.getNickname() %>" readonly>
 						<label for="nickname">닉네임</label>
+					</div>
+					<div class="col s2">
+						<button type="button" id="change_nn" onClick="btnChangeState(this)" class="btn-small z-depth-0 yellow darken-3">변경</button>
 					</div>
 				</div>
 				
@@ -75,10 +82,11 @@
 				<div class="row">
 					<div class="col s6 left-align">
 						<a href="/MyProject/pages/main/main.jsp" class="btn-large z-depth-0 blue-grey lighten-2">취소</a>
+						<a href="/MyProject/pages/user/delete.user?id=<%= userInfo.getId() %>" class="btn-large z-depth-0 blue-grey lighten-2">탈퇴</a>
 					</div>
 					
 					<div class="col s6 right-align">
-						<a onClick="signupCheck()" class="btn-large z-depth-0 yellow darken-3">가입하기</a>
+						<a onClick="editCheck()" class="btn-large z-depth-0 yellow darken-3">수정하기</a>
 					</div>				
 				</div>
 			</form>

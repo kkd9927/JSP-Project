@@ -15,12 +15,7 @@
 <body>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 	<script src="/MyProject/pages/board/js/board.js"></script>
-
-	<script type="text/javascript">
-		function loginCheck() {
-			document.loginForm.submit();
-		}
-	</script>
+	<script src="/MyProject/pages/user/js/user.js"></script>
 
 	<jsp:include page="/pages/include/navbar.jsp" />
 
