@@ -38,9 +38,9 @@
 				</a>
 				<ul>
 					<li><a href="/MyProject/pages/user/logout.user" class="btn-floating tooltipped nav-tooltip red" data-position="left" data-tooltip="로그아웃"><i class="material-icons">exit_to_app</i></a></li>
-					<li><a href="#" class="btn-floating tooltipped nav-tooltip yellow darken-1" data-position="left" data-tooltip="게시판 생성"><i class="material-icons">edit</i></a></li>
+					<li><a href="/MyProject/pages/board/create.board" class="btn-floating tooltipped nav-tooltip yellow darken-1" data-position="left" data-tooltip="게시판 생성"><i class="material-icons">edit</i></a></li>
 					<li><a href="#" class="btn-floating tooltipped nav-tooltip green" data-position="left" data-tooltip="내 게시판"><i class="material-icons">view_list</i></a></li>
-					<li><a href="/MyProject/pages/user/info.user?id=<%= userInfo.getId() %>" class="btn-floating tooltipped nav-tooltip blue" data-position="left" data-tooltip="내 정보"><i class="material-icons">person</i></a></li>
+					<li><a href="/MyProject/pages/user/info.user?id=<%= userInfo.getId() %>&userBoard=<%= userInfo.getManageBoard() %>" class="btn-floating tooltipped nav-tooltip blue" data-position="left" data-tooltip="내 정보"><i class="material-icons">person</i></a></li>
 				</ul>
 			</div>
 			<%

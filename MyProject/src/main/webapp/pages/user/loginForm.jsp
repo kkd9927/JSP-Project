@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <%
 	String url = request.getHeader("referer");
+	String result = (String)request.getAttribute("result");
 %>
 <html>
 <head>
@@ -43,6 +44,18 @@
 						<label for="pw">비밀번호</label>
 					</div>
 				</div>
+				
+				<%
+					if(result != null) { // 로그인 실패시에만 result 파라미터가 넘어옴
+				%>
+				<div class="row">
+					<div class="col s12 center-align">
+						<p class="red-text">아이디 또는 비밀번호가 틀렸습니다.</p>
+					</div>
+				</div>
+				<%
+					}
+				%>
 				
 				<div class="row">
 					<div class="col s6 right-align">

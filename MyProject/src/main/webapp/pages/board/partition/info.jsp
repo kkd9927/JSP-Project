@@ -1,29 +1,33 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="mvc.user.model.UserDTO, mvc.board.model.BoardDTO" %>
+<%
+	UserDTO userInfo = (UserDTO)session.getAttribute("UserInfo");
+	BoardDTO boardInfo = (BoardDTO)session.getAttribute("BoardInfo");
+%>
 <div class="card b-info">
 	<div class="card-image b-info-imgcon">
 		<div class="b-info-imgbox">
-			<img src="/MyProject/resource/images/sample.jpg">
+			<img src="/MyProject/upload/board/<%= boardInfo.getInfoImg() %>">
 		</div>
 	</div>
 	
 	<div class="card-content">
-		<h6><a href="#" class="black-text"><b>게시판 이름</b></a></h6>
-		<p>카테고리</p>
+		<h6><a href="#" class="black-text"><b><%= boardInfo.getTitle() %></b></a></h6>
+		<p><%= boardInfo.getCategory() %></p>
 		<br>
 		<p>
-			<a href="#" class="black-text">
+			<a href="/MyProject/pages/user/info.user?id=<%= userInfo.getId() %>&userBoard=<%= userInfo.getManageBoard() %>" class="black-text">
 				<span class="btn-floating btn-small">
-					<img src="/MyProject/resource/images/basic_profile_img.jpg">
+					<img src="/MyProject/upload/profile/<%= userInfo.getProfileImg() %>">
 				</span>
-				@관리자_닉네임
+				<%= boardInfo.getUserId() %>
 			</a>
 			<br>
-			관리자_이메일
 		</p>
 		<br>
 		<p>
-			소개글
+			<%= boardInfo.getDescription() %>
 		</p>
 	</div>
 

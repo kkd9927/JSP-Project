@@ -1,9 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="mvc.user.model.UserDTO, mvc.board.model.BoardDTO" %>
+<%
+	UserDTO userInfo = (UserDTO)session.getAttribute("UserInfo");
+	BoardDTO boardInfo = (BoardDTO)session.getAttribute("BoardInfo");
+%>
 <div class="card b-title z-depth-0">
 	<div class="card-image">
-		<img src="/MyProject/resource/images/sample.jpg" height="300">
-		<span class="card-title"><b>게시판 이름</b></span>
+		<img src="/MyProject/upload/board/<%= boardInfo.getTitleImg() %>" height="300">
+		<span class="card-title"><b><%= boardInfo.getTitle() %></b></span>
 	</div>
 	
 	<div class="fixed-action-btn title-action-btn">
@@ -12,9 +17,15 @@
 		</a>
 		
 		<ul>
-			<li><a href="#" class="btn-floating tooltipped title-tooltip white" data-position="bottom" data-tooltip="관리"><i class="black-text material-icons">build</i></a></li>
-			<li><a href="#" class="btn-floating tooltipped title-tooltip white" data-position="bottom" data-tooltip="캘린더"><i class="black-text material-icons">today</i></a></li>
-			<li><a href="#" class="btn-floating tooltipped title-tooltip white" data-position="bottom" data-tooltip="글쓰기"><i class="black-text material-icons">create</i></a></li>
+			<%
+				if(userInfo.getManageBoard().equals(boardInfo.getBoardId())) {
+			%>
+			<li><a href="/MyProject/pages/board/update.board" class="btn-floating tooltipped title-tooltip white" data-position="bottom" data-tooltip="수정"><i class="black-text material-icons">build</i></a></li>
+			<%
+				}
+			%>
+			<li><a href="#" class="btn-floating tooltipped title-tooltip white" data-position="bottom" data-tooltip="글 목록"><i class="black-text material-icons">list</i></a></li>
+			<li><a href="#" class="btn-floating tooltipped title-tooltip white" data-position="bottom" data-tooltip="글 쓰기"><i class="black-text material-icons">create</i></a></li>
 		</ul>
 	</div>
 </div>

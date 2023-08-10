@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="mvc.user.model.UserDTO" %>
+<%@ page import="mvc.user.model.UserDTO, mvc.board.model.BoardDTO" %>
 <%
 	UserDTO userInfo = (UserDTO)session.getAttribute("UserInfo");
+	BoardDTO boardInfo = (BoardDTO)session.getAttribute("BoardInfo");
 %>
 <!DOCTYPE html>
 <html>
@@ -49,18 +50,18 @@
 					<div class="row">
 						<div class="col s4">
 							<div class="card-image">
-								<img src="/MyProject/resource/images/sample.jpg" width="150" height="150">
+								<img src="/MyProject/upload/board/<%= boardInfo.getInfoImg() %>" width="150" height="150">
 							</div>
 						</div>
 						
 						<div class="col s8">
 							<div class="card-content">
-								<h6><a href="#" class="black-text"><b>게시판 이름</b></a></h6>
-								<p>카테고리</p>
+								<h6><a href="/MyProject/pages/board/<%= userInfo.getManageBoard() %>.board?userBoard=<%= userInfo.getManageBoard() %>" class="black-text"><b><%= boardInfo.getTitle() %></b></a></h6>
+								<p><%= boardInfo.getCategory() %></p>
 								
 								<div class="right-align">
-									<a href="#" class="btn-small z-depth-0 blue-grey lighten-2">관리</a>
-									<a href="#" class="btn-small z-depth-0 yellow darken-3">바로가기</a>
+									<a href="/MyProject/pages/board/update.board" class="btn-small z-depth-0 blue-grey lighten-2">수정</a>
+									<a href="/MyProject/pages/board/<%= userInfo.getManageBoard() %>.board?userBoard=<%= userInfo.getManageBoard() %>" class="btn-small z-depth-0 yellow darken-3">바로가기</a>
 								</div>
 							</div>
 						</div>
