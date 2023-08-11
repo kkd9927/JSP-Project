@@ -33,7 +33,7 @@
 				}
 			%>
 			<li><a href="#" class="btn-floating tooltipped title-tooltip white" data-position="bottom" data-tooltip="글 목록"><i class="black-text material-icons">list</i></a></li>
-			<li><a href="#" class="btn-floating tooltipped title-tooltip white" data-position="bottom" data-tooltip="글 쓰기"><i class="black-text material-icons">create</i></a></li>
+			<li><a href="/MyProject/pages/board/write.content?domain=<%= boardInfo.getBoardId() %>" class="btn-floating tooltipped title-tooltip white" data-position="bottom" data-tooltip="글 쓰기"><i class="black-text material-icons">create</i></a></li>
 		</ul>
 	</div>
 </div>

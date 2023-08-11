@@ -9,6 +9,11 @@
 		<servlet-name>BoardController</servlet-name>
 		<servlet-class>mvc.board.controller.BoardController</servlet-class>
 	</servlet>
+	
+	<servlet>
+		<servlet-name>ContentController</servlet-name>
+		<servlet-class>mvc.content.controller.ContentController</servlet-class>
+	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>UserController</servlet-name>
@@ -19,5 +24,10 @@
 		<servlet-name>BoardController</servlet-name>
 		<url-pattern>*.board</url-pattern>
 		<url-pattern>/pages/main/main.jsp</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>ContentController</servlet-name>
+		<url-pattern>*.content</url-pattern>
 	</servlet-mapping>
 </web-app>
