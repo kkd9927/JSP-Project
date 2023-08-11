@@ -45,7 +45,9 @@
 		<div class="row">
 			<div class="col s6">
 				<h6>내 게시판</h6>
-				
+				<%
+					if(userInfo.getManageBoard() != null) {
+				%>
 				<div class="card">
 					<div class="row">
 						<div class="col s4">
@@ -67,6 +69,24 @@
 						</div>
 					</div>
 				</div>
+				<%
+					} else {
+				%>
+				<div class="row">
+					<div class="col s4">
+						<img src="/MyProject/resource/images/sample.jpg" width="75" height="75" style="visibility: hidden;">
+					</div>
+					
+					<div class="col s8">
+						<span class="black-text">
+							운영중인 게시판이 없어요<br>
+						</span><br>
+						<a href="/MyProject/pages/board/create.board" class="btn-small z-depth-0 yellow darken-3">만들기</a>
+					</div>
+				</div>
+				<%
+					}
+				%>
 				
 				<br>
 				<hr>

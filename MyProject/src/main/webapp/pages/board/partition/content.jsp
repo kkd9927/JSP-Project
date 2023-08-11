@@ -45,25 +45,26 @@
 		</div>
 	</div>
 	
-	<div class="b-comment-line">
-		<ul class="collapsible z-depth-0">
-			<li>
-				<div class="collapsible-header">
-					<i class="material-icons">keyboard_arrow_down</i>
-					<b>comment(1)</b>
-				</div>
-				<div class="collapsible-body left-align">
-					<p>
-						<a href="#" class="black-text">
-							<span class="btn-floating btn-small">
-								<img src="/MyProject/resource/images/basic_profile_img.jpg">
-							</span>
-							@작성자_닉네임
-						</a>
-						댓글 내용
-					</p>
-				</div>
-			</li>
-		</ul>
-	</div>
+<!-- 	<div class="b-comment-line"> -->
+<!-- 		<ul class="collapsible z-depth-0"> -->
+<!-- 			<li> -->
+<!-- 				<div class="collapsible-header"> -->
+<!-- 					<i class="material-icons">keyboard_arrow_down</i> -->
+<!-- 					<b>comment(1)</b> -->
+<!-- 				</div> -->
+<!-- 				<div class="collapsible-body left-align"> -->
+<!-- 					<p> -->
+<!-- 						<a href="#" class="black-text"> -->
+<!-- 							<span class="btn-floating btn-small"> -->
+<!-- 								<img src="/MyProject/resource/images/basic_profile_img.jpg"> -->
+<!-- 							</span> -->
+<!-- 							@작성자_닉네임 -->
+<!-- 						</a> -->
+<!-- 						댓글 내용 -->
+<!-- 					</p> -->
+<!-- 				</div> -->
+<!-- 			</li> -->
+<!-- 		</ul> -->
+<!-- 	</div> -->
 </div>
+

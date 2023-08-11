@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="mvc.user.model.UserDTO" %>
 <%
-	UserDTO userInfo = (UserDTO)session.getAttribute("UserInfo");
+	UserDTO loginInfo = (UserDTO)session.getAttribute("UserInfo");
 %>
 <link href="/MyProject/pages/include/css/navbar.css" rel="stylesheet">
 <script src="/MyProject/pages/include/js/navbar.js"></script>
@@ -13,10 +13,11 @@
 	</div>
 	
    	<div class="nav-wrapper col m4">
-		<form action="#" method="post">
+		<form action="/MyProject/pages/main/search.board" method="post">
 	        <div class="input-field">
-	        	<input name="search" type="search" required>
-	        	<label class="label-icon" for="search"><i class="material-icons">search</i></label>
+	        	<input type="hidden" name="type" value="search">
+	        	<input id="keyward" name="keyward" type="search" required>
+	        	<label class="label-icon" for="keyward"><i class="material-icons">search</i></label>
 				<i class="material-icons">close</i>
 	        </div>
      	</form>
@@ -25,7 +26,7 @@
 	<div class="col m4">
 		<div class="right">
 			<%
-				if(userInfo == null) {
+				if(loginInfo == null) {
 			%>
 			<a href="/MyProject/pages/user/login.user" class="btn yellow darken-3 z-depth-0">로그인</a>
 			<a href="/MyProject/pages/user/signup.user" class="btn yellow darken-3 z-depth-0">회원가입</a>
@@ -34,13 +35,13 @@
 			%>
 			<div class="fixed-action-btn navbar-action-btn">
 				<a class="btn-floating click-to-toggle btn-large red z-depth-0">
-					<img src="/MyProject/upload/profile/<%= userInfo.getProfileImg() %>" class="circle responsive-img" style="width: 100%; height: 100%">
+					<img src="/MyProject/upload/profile/<%= loginInfo.getProfileImg() %>" class="circle responsive-img" style="width: 100%; height: 100%">
 				</a>
 				<ul>
 					<li><a href="/MyProject/pages/user/logout.user" class="btn-floating tooltipped nav-tooltip red" data-position="left" data-tooltip="로그아웃"><i class="material-icons">exit_to_app</i></a></li>
 					<li><a href="/MyProject/pages/board/create.board" class="btn-floating tooltipped nav-tooltip yellow darken-1" data-position="left" data-tooltip="게시판 생성"><i class="material-icons">edit</i></a></li>
-					<li><a href="#" class="btn-floating tooltipped nav-tooltip green" data-position="left" data-tooltip="내 게시판"><i class="material-icons">view_list</i></a></li>
-					<li><a href="/MyProject/pages/user/info.user?id=<%= userInfo.getId() %>&userBoard=<%= userInfo.getManageBoard() %>" class="btn-floating tooltipped nav-tooltip blue" data-position="left" data-tooltip="내 정보"><i class="material-icons">person</i></a></li>
+					<li><a href="/MyProject/pages/board/<%= loginInfo.getManageBoard() %>.board?userBoard=<%= loginInfo.getManageBoard() %>" class="btn-floating tooltipped nav-tooltip green" data-position="left" data-tooltip="내 게시판"><i class="material-icons">view_list</i></a></li>
+					<li><a href="/MyProject/pages/user/info.user?id=<%= loginInfo.getId() %>&userBoard=<%= loginInfo.getManageBoard() %>" class="btn-floating tooltipped nav-tooltip blue" data-position="left" data-tooltip="내 정보"><i class="material-icons">person</i></a></li>
 				</ul>
 			</div>
 			<%

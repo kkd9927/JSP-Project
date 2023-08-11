@@ -18,5 +18,6 @@
 	<servlet-mapping>
 		<servlet-name>BoardController</servlet-name>
 		<url-pattern>*.board</url-pattern>
+		<url-pattern>/pages/main/main.jsp</url-pattern>
 	</servlet-mapping>
 </web-app>

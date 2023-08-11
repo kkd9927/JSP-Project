@@ -17,13 +17,7 @@
 <body>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 	<script src="/MyProject/pages/board/js/board.js"></script>
-
-	<script type="text/javascript">
-		function createCheck() {
-			document.createForm.submit();
-		}
-	</script>
-
+	
 	<jsp:include page="/pages/include/navbar.jsp" />
 
 	<div class="container">
@@ -43,7 +37,7 @@
 					<div class="input-field col s8">
 						<input id="domain" name="domain" type="text">
 						<label for="domain">게시판 주소</label>
-						<span class="helper-text" data-error="wrong" data-success="right">20자 이하</span>
+						<span class="helper-text" data-error="wrong" data-success="right">영문 소문자 및 숫자 조합 20자 이하</span>
 					</div>
 					
 					<div class="input-field col s4">
@@ -64,7 +58,7 @@
 					<div class="input-field col s12">
 						<input id="title" name="title" type="text">
 						<label for="title">게시판 이름</label>
-						<span class="helper-text" data-error="wrong" data-success="right">30자 이하</span>
+						<span class="helper-text" id="titleLength" data-error="wrong" data-success="right">한글 1글자당 2byte, 영문, 숫자 1글자당 1byte / 50byte</span>
 					</div>
 				</div>
 
@@ -114,5 +108,7 @@
 	</div>
 
 	<jsp:include page="/pages/include/footer.jsp" />
+	
+	<script src="/MyProject/pages/board/js/form.js"></script>
 </body>
 </html>

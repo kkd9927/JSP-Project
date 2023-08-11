@@ -2,8 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ page import="mvc.user.model.UserDTO, mvc.board.model.BoardDTO" %>
 <%
-	UserDTO userInfo = (UserDTO)session.getAttribute("UserInfo");
-	BoardDTO boardInfo = (BoardDTO)session.getAttribute("BoardInfo");
+	UserDTO userInfo = (UserDTO)request.getAttribute("UserInfo");
+	BoardDTO boardInfo = (BoardDTO)request.getAttribute("BoardInfo");
 %>
 <div class="card b-info">
 	<div class="card-image b-info-imgcon">

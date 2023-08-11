@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import mvc.DBConnection;
 
@@ -89,6 +90,82 @@ public class BoardDAO {
 		}
 		
 		dbClose();
+	}
+	
+	public ArrayList<BoardDTO> getBoardList(String category) {
+		ArrayList<BoardDTO> totalList = new ArrayList<BoardDTO>();
+		BoardDTO board = new BoardDTO();
+		
+		String sql = "";
+		
+		try {
+			if(category.equals("전체")) {
+				sql = "SELECT * FROM BOARD_LIST";
+			} else {
+				sql = "SELECT * FROM BOARD_LIST WHERE CATEGORY = ?";
+			}
+			
+			conn = DBConnection.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			
+			if(!category.equals("전체")) {
+				pstmt.setString(1, category);
+			}
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				board = new BoardDTO();
+				board.setBoardId(rs.getString("BOARD_ID"));
+				board.setTitle(rs.getString("TITLE"));
+				board.setUserId(rs.getString("USER_ID"));
+				board.setCategory(rs.getString("CATEGORY"));
+				board.setDescription(rs.getString("DESCRIPTION"));
+				board.setTitleImg(rs.getString("TITLE_IMG"));
+				board.setInfoImg(rs.getString("INFO_IMG"));
+				
+				totalList.add(board);
+			}
+		} catch(Exception e) {
+			
+		}
+		
+		dbClose();
+		
+		return totalList;
+	}
+	
+	public ArrayList<BoardDTO> getSearchResult(String keyward) {
+		ArrayList<BoardDTO> totalList = new ArrayList<BoardDTO>();
+		BoardDTO board = new BoardDTO();
+		
+		try {
+			String sql = "SELECT * FROM BOARD_LIST WHERE TITLE LIKE ?";
+			
+			conn = DBConnection.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+keyward+"%");
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				board = new BoardDTO();
+				board.setBoardId(rs.getString("BOARD_ID"));
+				board.setTitle(rs.getString("TITLE"));
+				board.setUserId(rs.getString("USER_ID"));
+				board.setCategory(rs.getString("CATEGORY"));
+				board.setDescription(rs.getString("DESCRIPTION"));
+				board.setTitleImg(rs.getString("TITLE_IMG"));
+				board.setInfoImg(rs.getString("INFO_IMG"));
+				
+				totalList.add(board);
+			}
+		} catch(Exception e) {
+			
+		}
+		
+		dbClose();
+		
+		return totalList;
 	}
 	
 	public BoardDTO getUserBoard(String domain) {

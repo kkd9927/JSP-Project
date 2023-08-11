@@ -3,6 +3,7 @@ package mvc.board.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -37,6 +38,14 @@ public class BoardController extends HttpServlet {
 		} else if(command.equals("/pages/board/createSend.board")) {
 			requestCreateBoard(request);
 			RequestDispatcher rd = request.getRequestDispatcher("createResult.jsp");
+			rd.forward(request, response);
+		} else if(command.equals("/pages/main/main.board") || command.equals("/pages/main/main.jsp")) {
+			requestGetList(request);
+			RequestDispatcher rd = request.getRequestDispatcher("/pages/main/boardList.jsp");
+			rd.forward(request, response);
+		} else if(command.equals("/pages/main/search.board")) {
+			requestGetList(request);
+			RequestDispatcher rd = request.getRequestDispatcher("/pages/main/search.jsp");
 			rd.forward(request, response);
 		} else if(command.equals("/pages/board/" + request.getParameter("userBoard") + ".board")) {
 			requestGetBoard(request);
@@ -114,14 +123,80 @@ public class BoardController extends HttpServlet {
 		session.setAttribute("UserInfo", user);
 	}
 	
-	private void requestGetBoard(HttpServletRequest request) {
+	private void requestGetList(HttpServletRequest request) {
 		BoardDAO dao = BoardDAO.getInstance();
+		ArrayList<BoardDTO> totalList = new ArrayList<BoardDTO>();
+		ArrayList<BoardDTO> pageList = new ArrayList<BoardDTO>();
+		List<ArrayList<BoardDTO>> totalPage = new ArrayList<ArrayList<BoardDTO>>();
+		
+		String type = "";
+		String category = "";
+		
+		if(request.getParameter("type") != null) {
+			type = request.getParameter("type");
+		} else {
+			type = "list";
+		}
+		
+		if(type.equals("list")) {
+			if(request.getParameter("category") != null) {
+				category = request.getParameter("category");
+			} else {
+				category = "전체";
+			}
+			
+			totalList = dao.getBoardList(category);
+			request.setAttribute("Category", category);
+		} else if(type.equals("search")) {
+			String keyward = request.getParameter("keyward");
+			totalList = dao.getSearchResult(keyward);
+			request.setAttribute("Keyward", keyward);
+		}
+			
+		int pageNum = 1;
+		if(request.getParameter("page") != null) {
+			pageNum = Integer.parseInt(request.getParameter("page"));
+		}
+		
+		int cnt = 1;
+		int totalCnt = totalList.size();
+		
+		for(int i=0; i<totalList.size(); i++) {
+			pageList.add(totalList.get(i));
+			
+			if(cnt == 8) {
+				totalPage.add(pageList);
+				totalCnt -= cnt;
+				cnt = 1;
+				
+				pageList = new ArrayList<BoardDTO>();
+			} else if(cnt == totalCnt) {
+				totalPage.add(pageList);
+			} else {
+				cnt++;
+			}
+			
+		}
+		
+		if(!totalPage.isEmpty()) {
+			request.setAttribute("BoardList", totalPage.get(pageNum-1));
+		}
+		
+		request.setAttribute("TotalPage", totalPage.size());
+		request.setAttribute("PageNum", pageNum);
+	}
+	
+	private void requestGetBoard(HttpServletRequest request) {
+		BoardDAO boardDao = BoardDAO.getInstance();
 		BoardDTO board = new BoardDTO();
-		HttpSession session = request.getSession();
+		UserDAO userDao = UserDAO.getInstance();
+		UserDTO user = new UserDTO();
 		String domain = request.getParameter("userBoard");
 		
-		board = dao.getUserBoard(domain);
-		session.setAttribute("BoardInfo", board);
+		board = boardDao.getUserBoard(domain);
+		user = userDao.getUser(board.getUserId(), null);
+		request.setAttribute("BoardInfo", board);
+		request.setAttribute("UserInfo", user);
 	}
 	
 	private void requestUpdateBoard(HttpServletRequest request) throws IOException {
