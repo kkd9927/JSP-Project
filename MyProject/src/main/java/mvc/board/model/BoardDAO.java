@@ -30,7 +30,7 @@ public class BoardDAO {
 		if(category == null) {
 			category = new ArrayList<String>();
 			
-			String sql = "SELECT * FROM CATEGORY_LIST";
+			String sql = "SELECT * FROM CATEGORY";
 			
 			try {
 				conn = DBConnection.getConnection();

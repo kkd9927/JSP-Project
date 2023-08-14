@@ -2,13 +2,13 @@ package mvc.content.model;
 
 public class ContentDTO {
 	private String boardId;
-	private String contentId;
+	private int contentId;
 	private String userId;
 	private String writeDate;
 	private String title;
 	private String content;
 	private String files;
-	private String rec;
+	private int rec;
 	
 	public String getBoardId() {
 		return boardId;
@@ -16,10 +16,10 @@ public class ContentDTO {
 	public void setBoardId(String boardId) {
 		this.boardId = boardId;
 	}
-	public String getContentId() {
+	public int getContentId() {
 		return contentId;
 	}
-	public void setContentId(String contentId) {
+	public void setContentId(int contentId) {
 		this.contentId = contentId;
 	}
 	public String getUserId() {
@@ -52,10 +52,10 @@ public class ContentDTO {
 	public void setFiles(String files) {
 		this.files = files;
 	}
-	public String getRec() {
+	public int getRec() {
 		return rec;
 	}
-	public void setRec(String rec) {
+	public void setRec(int rec) {
 		this.rec = rec;
 	}
 }

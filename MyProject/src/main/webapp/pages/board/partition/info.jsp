@@ -21,7 +21,7 @@
 				<span class="btn-floating btn-small">
 					<img src="/MyProject/upload/profile/<%= userInfo.getProfileImg() %>">
 				</span>
-				<%= boardInfo.getUserId() %>
+				<%= userInfo.getNickname() %>
 			</a>
 			<br>
 		</p>

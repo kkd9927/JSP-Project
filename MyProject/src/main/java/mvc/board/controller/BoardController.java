@@ -17,6 +17,8 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import mvc.board.model.BoardDAO;
 import mvc.board.model.BoardDTO;
+import mvc.content.model.ContentDAO;
+import mvc.content.model.ContentDTO;
 import mvc.user.model.UserDAO;
 import mvc.user.model.UserDTO;
 
@@ -175,7 +177,6 @@ public class BoardController extends HttpServlet {
 			} else {
 				cnt++;
 			}
-			
 		}
 		
 		if(!totalPage.isEmpty()) {
@@ -191,10 +192,47 @@ public class BoardController extends HttpServlet {
 		BoardDTO board = new BoardDTO();
 		UserDAO userDao = UserDAO.getInstance();
 		UserDTO user = new UserDTO();
+		ContentDAO contentDao = ContentDAO.getInstance();
+		ContentDTO content = new ContentDTO();
+		
+		ArrayList<ContentDTO> totalList = new ArrayList<ContentDTO>();
+		ArrayList<ContentDTO> pageList = new ArrayList<ContentDTO>();
+		List<ArrayList<ContentDTO>> totalPage = new ArrayList<ArrayList<ContentDTO>>();
+		
 		String domain = request.getParameter("userBoard");
 		
 		board = boardDao.getUserBoard(domain);
 		user = userDao.getUser(board.getUserId(), null);
+		totalList = contentDao.getContentList(domain);
+		
+		int pageNum = 1;
+		if(request.getParameter("page") != null) {
+			pageNum = Integer.parseInt(request.getParameter("page"));
+		}
+		
+		int cnt = 1;
+		int totalCnt = totalList.size();
+		
+		for(int i=0; i<totalList.size(); i++) {
+			pageList.add(totalList.get(i));
+			
+			if(cnt == 10) {
+				totalPage.add(pageList);
+				totalCnt -= cnt;
+				cnt = 1;
+				
+				pageList = new ArrayList<ContentDTO>();
+			} else if(cnt == totalCnt) {
+				totalPage.add(pageList);
+			} else {
+				cnt++;
+			}
+		}
+		
+		if(!totalPage.isEmpty()) {
+			request.setAttribute("ContentList", totalPage.get(pageNum-1));
+		}
+		
 		request.setAttribute("BoardInfo", board);
 		request.setAttribute("UserInfo", user);
 	}

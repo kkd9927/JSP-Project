@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%
 	String domain = request.getParameter("domain");
+	String userid = request.getParameter("userid");
 %>
 <!DOCTYPE html>
 <html>
@@ -19,11 +20,11 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 	<script src="/MyProject/pages/board/js/board.js"></script>
 	
-	<script type="text/javascript">
-		function checkWrite() {
-			document.writeForm.submit;
-		}
-	</script>
+<!-- 	<script type="text/javascript"> -->
+<!-- 		function checkWrite() { -->
+<!-- 			document.writeForm.submit; -->
+<!-- 		} -->
+<!-- 	</script> -->
 	
 	<jsp:include page="/pages/include/navbar.jsp" />
 
@@ -39,6 +40,7 @@
 
 			<form action="/MyProject/pages/board/writeSend.content" method="post" name="writeForm" enctype="multipart/form-data" class="col s6">
 				<input type="hidden" name="domain" value="<%= domain %>">
+				<input type="hidden" name="userid" value="<%= userid %>">
 				
 				<div class="row">
 					<div class="input-field col s12">
@@ -72,7 +74,8 @@
 					</div>
 					
 					<div class="col s6 right-align">
-						<a onclick="checkWrite()" class="btn-large z-depth-0 yellow darken-3">등록하기</a>
+<!-- 						<a onclick="checkWrite()" class="btn-large z-depth-0 yellow darken-3">등록하기</a> -->
+						<input type="submit" value="등록하기" class="btn-large z-depth-0 yellow darken-3">
 					</div>				
 				</div>
 			</form>

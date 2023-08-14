@@ -24,8 +24,7 @@
 			</div>
 			
 			<div class="col m7">
-				<jsp:include page="/pages/board/partition/content.jsp"/>
-<%-- 				<jsp:include page="/pages/board/partition/pagination.jsp"/>				 --%>
+				<jsp:include page="/pages/board/partition/contentList.jsp"/>
 			</div>
 			
 			<div class="col m2">
