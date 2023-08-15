@@ -227,12 +227,30 @@ public class BoardDAO {
 			int rs = pstmt.executeUpdate();
 			
 			if(rs == 1) {
-				sql = "DELETE FROM BOARD_LIST WHERE BOARD_ID = ?";
+				sql = "DELETE FROM USER_CONTENT WHERE USER_ID = ?";
 				
 				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, domain);
+				pstmt.setString(1, userId);
 				
 				rs = pstmt.executeUpdate();
+				
+				if(rs == 1) {
+					sql = "DELETE FROM CONTENT_LIST WHERE BOARD_ID = ?";
+					
+					pstmt = conn.prepareStatement(sql);
+					pstmt.setString(1, domain);
+					
+					rs = pstmt.executeUpdate();
+					
+					if(rs == 1) {
+						sql = "DELETE FROM BOARD_LIST WHERE BOARD_ID = ?";
+						
+						pstmt = conn.prepareStatement(sql);
+						pstmt.setString(1, domain);
+						
+						rs = pstmt.executeUpdate();
+					}
+				}
 			}
 		} catch(Exception e) {
 			

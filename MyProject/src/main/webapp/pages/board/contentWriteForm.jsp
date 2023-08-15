@@ -70,7 +70,7 @@
 				
 				<div class="row">
 					<div class="col s6 left-align">
-						<a href="#" class="btn-large z-depth-0 blue-grey lighten-2">취소</a>
+						<a href="/MyProject/pages/board/<%= domain %>.board" class="btn-large z-depth-0 blue-grey lighten-2">취소</a>
 					</div>
 					
 					<div class="col s6 right-align">

@@ -1,7 +1,11 @@
 package mvc.content.controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -45,6 +49,18 @@ public class ContentController extends HttpServlet {
 			requestGetContent(request);
 			RequestDispatcher rd = request.getRequestDispatcher("content.jsp");
 			rd.forward(request, response);
+		} else if(command.equals("/pages/board/edit.content")) {
+			requestGetContent(request);
+			RequestDispatcher rd = request.getRequestDispatcher("contentEditForm.jsp");
+			rd.forward(request, response);
+		} else if(command.equals("/pages/board/editSend.content")) {
+			requestEditContent(request);
+			RequestDispatcher rd = request.getRequestDispatcher("/pages/board/readContent.content");
+			rd.forward(request, response);
+		} else if(command.equals("/pages/board/delete.content")) {
+			requestDeleteContent(request);
+			RequestDispatcher rd = request.getRequestDispatcher("/pages/board/" + request.getParameter("userBoard") + ".board");
+			rd.forward(request, response);
 		}
 	}
 
@@ -65,7 +81,7 @@ public class ContentController extends HttpServlet {
 		// Part API 이용하여 다중 파일 업로드 구현
 		// 서블릿 3.0 이상 / 공식문서: https://tomcat.apache.org/tomcat-7.0-doc/servletapi/javax/servlet/http/Part.html
 		
-		List<Part> partList = (List<Part>)request.getParts(); // getParts 메소드는 Collection 타입으로 반환되기 때문에 List로 다운캐스팅 
+		List<Part> partList = (List<Part>)request.getParts(); // getParts 메소드는 Collection 타입으로 반환되기 때문에 List로 캐스팅 
 		String filePath = getServletContext().getRealPath("/") + "upload\\content";
 		
 		int cnt = 1;
@@ -81,10 +97,13 @@ public class ContentController extends HttpServlet {
 				continue;
 			}
 			
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss", Locale.KOREA);
+			String date = dateFormat.format(new Date());
+			
 			String originName = part.getSubmittedFileName(); // 업로드한 파일이름 추출
 			String nameArr[] = originName.split("\\.");
 			String extension = nameArr[1]; // .을 기준으로 분리하여 파일 확장자 추출
-			String fileName = domain + "_" + userid + "_" + cnt + "." + extension; // 파일명 domain_userid.extention
+			String fileName = userid + "_" + date + "_" + cnt + "." + extension; // 파일명 userid_date_cnt.extention
 			
 			files += fileName + "/";
 			
@@ -127,5 +146,92 @@ public class ContentController extends HttpServlet {
 		request.setAttribute("ContentInfo", content);
 		request.setAttribute("BoardInfo", board);
 		request.setAttribute("WriterInfo", user);
+	}
+	
+	private void requestEditContent(HttpServletRequest request) throws ServletException, IOException {
+		ContentDAO dao = ContentDAO.getInstance();
+		ContentDTO content = new ContentDTO();
+		
+		String domain = request.getParameter("domain");
+		int contentId = Integer.parseInt(request.getParameter("contentId"));
+		String userid = request.getParameter("userid");
+		String title = request.getParameter("title");
+		String text = request.getParameter("content");
+		
+		String files = "";
+		
+		if(request.getParameter("filesLength") != null) {
+			int fileCnt = Integer.parseInt(request.getParameter("filesLength"));
+			
+			for(int i=1; i<=fileCnt; i++) {
+				if(request.getParameter("originImg" + i) != null) {
+					files += request.getParameter("originImg" + i) + "/";
+				}
+			}
+		}
+		
+		List<Part> partList = (List<Part>)request.getParts();
+		String filePath = getServletContext().getRealPath("/") + "upload\\content";
+		
+		int cnt = 1;
+		
+		if(!files.equals("")) {
+			cnt = files.split("/").length + 1;
+		}
+		
+		for(int i=0; i<partList.size(); i++) {
+			Part part = partList.get(i);
+			
+			if(!part.getName().equals("contentImg")) {
+				continue;
+			}
+			
+			if(part.getSubmittedFileName().equals("")) {
+				continue;
+			}
+			
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss", Locale.KOREA);
+			String date = dateFormat.format(new Date());
+			
+			String originName = part.getSubmittedFileName();
+			String nameArr[] = originName.split("\\.");
+			String extension = nameArr[1];
+			String fileName = userid + "_" + date + "_" + cnt + "." + extension;
+			
+			files += fileName + "/";
+			
+			part.write(filePath + "\\" + fileName);
+			
+			cnt++;
+		}
+		
+		content.setBoardId(domain);
+		content.setContentId(contentId);
+		content.setUserId(userid);
+		content.setTitle(title);
+		content.setContent(text);
+		content.setFiles(files);
+		
+		dao.updateContent(content);
+		
+		request.setAttribute("contentId", contentId);
+	}
+	
+	private void requestDeleteContent(HttpServletRequest request) {
+		ContentDAO dao = ContentDAO.getInstance();
+		ContentDTO content = new ContentDTO();
+		int contentId = Integer.parseInt(request.getParameter("contentId"));
+		
+		// 업로드 파일 삭제
+		content = dao.getContent(contentId);
+		String files[] = content.getFiles().split("/");
+		String filePath = getServletContext().getRealPath("/") + "upload\\content";
+		
+		for(int i=0; i<files.length; i++) {
+			File file = new File(filePath + "\\" + files[i]);
+			file.delete();
+		}
+		
+		dao.deleteContent(contentId);
 	}
 }

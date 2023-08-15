@@ -7,8 +7,12 @@
 	if(request.getAttribute("ContentList") != null) {
 		contentList = (ArrayList<ContentDTO>)request.getAttribute("ContentList");
 	}
-%>    
-<%
+	
+	UserDTO userInfo = (UserDTO)request.getAttribute("UserInfo");
+	BoardDTO boardInfo = (BoardDTO)request.getAttribute("BoardInfo");
+	int totalPage = (Integer)request.getAttribute("TotalPage");
+	int pageNum = (Integer)request.getAttribute("PageNum");
+
 	if(contentList != null) {
 		for(int i=0; i<contentList.size(); i++) {
 %>
@@ -21,6 +25,10 @@
 						String files[] = contentList.get(i).getFiles().split("/");
 				%>
 				<img src="/MyProject/upload/content/<%= files[0] %>" width="150" height="150">
+				<%
+					} else {
+				%>
+				<img src="/MyProject/resource/images/no-photo.png" width="150" height="150">
 				<%
 					}
 				%>
@@ -39,5 +47,44 @@
 </div>
 <%
 		}
-	}
 %>
+<div class="row">
+	<ul class="pagination center-align">
+		<%
+			if(pageNum == 1) {
+		%>
+		<li class="disabled"><a href="#"><i class="material-icons">chevron_left</i></a></li>
+		<%
+			} else {
+		%>
+		<li><a href="/MyProject/pages/board/<%= boardInfo.getBoardId() %>.board?userBoard=<%= boardInfo.getBoardId() %>&page=<%= pageNum-1 %>"><i class="material-icons">chevron_left</i></a></li>
+		<%
+			}
+		%>
+		<%
+			for(int i=1; i<=totalPage; i++) {
+				if(pageNum == i) {
+		%>
+		<li class="active yellow darken-3"><a href="/MyProject/pages/board/<%= boardInfo.getBoardId() %>.board?userBoard=<%= boardInfo.getBoardId() %>&page=<%= i %>"><%= i %></a></li>
+		<%
+				} else {
+		%>
+		<li><a href="/MyProject/pages/board/<%= boardInfo.getBoardId() %>.board?userBoard=<%= boardInfo.getBoardId() %>&page=<%= i %>"><%= i %></a></li>
+		<%
+				}
+			}
+		%>
+	    <%
+			if(pageNum == totalPage) {
+		%>
+		<li class="disabled"><a href="#"><i class="material-icons">chevron_right</i></a></li>
+		<%
+			} else {
+		%>
+		<li><a href="/MyProject/pages/board/<%= boardInfo.getBoardId() %>.board?userBoard=<%= boardInfo.getBoardId() %>&page=<%= pageNum+1 %>"><i class="material-icons">chevron_right</i></a></li>
+		<%
+				}
+			}
+		%>
+ 	</ul>
+</div>

@@ -8,7 +8,7 @@
 <div class="card b-info">
 	<div class="card-image b-info-imgcon">
 		<div class="b-info-imgbox">
-			<img src="/MyProject/upload/board/<%= boardInfo.getInfoImg() %>">
+			<img src="/MyProject/upload/board/<%= boardInfo.getInfoImg() %>" onerror="this.src='/MyProject/resource/images/no-photo.png'">
 		</div>
 	</div>
 	

@@ -38,8 +38,15 @@ public class BoardController extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher("createForm.jsp");
 			rd.forward(request, response);
 		} else if(command.equals("/pages/board/createSend.board")) {
-			requestCreateBoard(request);
-			RequestDispatcher rd = request.getRequestDispatcher("createResult.jsp");
+			boolean result = requestCreateBoard(request);
+			RequestDispatcher rd;
+			
+			if(result) {
+				rd = request.getRequestDispatcher("createResultSuccess.jsp");
+			} else {
+				rd = request.getRequestDispatcher("createResultFail.jsp");
+			}
+			
 			rd.forward(request, response);
 		} else if(command.equals("/pages/main/main.board") || command.equals("/pages/main/main.jsp")) {
 			requestGetList(request);
@@ -77,52 +84,58 @@ public class BoardController extends HttpServlet {
 		request.setAttribute("category", category);
 	}
 	
-	private void requestCreateBoard(HttpServletRequest request) throws IOException {
+	private boolean requestCreateBoard(HttpServletRequest request) throws IOException {
 		BoardDAO dao = BoardDAO.getInstance();
 		BoardDTO board = new BoardDTO();
 		
-		String filePath = getServletContext().getRealPath("/") + "upload\\board";
-		int fileSize = 5 * 1024 * 1024;
-		
-		MultipartRequest multi = new MultipartRequest(request, filePath, fileSize, "UTF-8", new DefaultFileRenamePolicy());
-		
-		String domain = multi.getParameter("domain");
-		String title = multi.getParameter("title");
-		String category = multi.getParameter("category");
-		String id = multi.getParameter("id");
-		String description = multi.getParameter("description");
-		String fileNameTitle = multi.getOriginalFileName("titleImg");
-		String fileNameInfo = multi.getOriginalFileName("infoImg");
-		
-		String titleImgName = "";
-		String infoImgName = "";
-		
-		if(fileNameTitle != null) {
-			titleImgName = renameFile(fileNameTitle, filePath, domain, "title");
-		} 
-		
-		if(fileNameInfo != null) {
-			infoImgName = renameFile(fileNameInfo, filePath, domain, "info");
+		if(dao.getUserBoard(request.getParameter("domain")) == null) {
+			String filePath = getServletContext().getRealPath("/") + "upload\\board";
+			int fileSize = 5 * 1024 * 1024;
+			
+			MultipartRequest multi = new MultipartRequest(request, filePath, fileSize, "UTF-8", new DefaultFileRenamePolicy());
+			
+			String domain = multi.getParameter("domain");
+			String title = multi.getParameter("title");
+			String category = multi.getParameter("category");
+			String id = multi.getParameter("id");
+			String description = multi.getParameter("description");
+			String fileNameTitle = multi.getOriginalFileName("titleImg");
+			String fileNameInfo = multi.getOriginalFileName("infoImg");
+			
+			String titleImgName = "";
+			String infoImgName = "";
+			
+			if(fileNameTitle != null) {
+				titleImgName = renameFile(fileNameTitle, filePath, domain, "title");
+			} 
+			
+			if(fileNameInfo != null) {
+				infoImgName = renameFile(fileNameInfo, filePath, domain, "info");
+			}
+			
+			board.setBoardId(domain);
+			board.setTitle(title);
+			board.setCategory(category);
+			board.setUserId(id);
+			board.setDescription(description);
+			board.setTitleImg(titleImgName);
+			board.setInfoImg(infoImgName);
+			
+			dao.createBoard(board);
+			
+			// 기존 로그인 정보 삭제 후 변경된 정보(게시판 추가)로 업데이트
+			UserDAO userDAO = UserDAO.getInstance();
+			UserDTO user = new UserDTO();
+			HttpSession session = request.getSession();
+			session.removeAttribute("UserInfo");
+			
+			user = userDAO.getUser(id, null);
+			session.setAttribute("UserInfo", user);
+			
+			return true;
+		} else {
+			return false;
 		}
-		
-		board.setBoardId(domain);
-		board.setTitle(title);
-		board.setCategory(category);
-		board.setUserId(id);
-		board.setDescription(description);
-		board.setTitleImg(titleImgName);
-		board.setInfoImg(infoImgName);
-		
-		dao.createBoard(board);
-		
-		// 기존 로그인 정보 삭제 후 변경된 정보(게시판 추가)로 업데이트
-		UserDAO userDAO = UserDAO.getInstance();
-		UserDTO user = new UserDTO();
-		HttpSession session = request.getSession();
-		session.removeAttribute("UserInfo");
-		
-		user = userDAO.getUser(id, null);
-		session.setAttribute("UserInfo", user);
 	}
 	
 	private void requestGetList(HttpServletRequest request) {
@@ -193,7 +206,6 @@ public class BoardController extends HttpServlet {
 		UserDAO userDao = UserDAO.getInstance();
 		UserDTO user = new UserDTO();
 		ContentDAO contentDao = ContentDAO.getInstance();
-		ContentDTO content = new ContentDTO();
 		
 		ArrayList<ContentDTO> totalList = new ArrayList<ContentDTO>();
 		ArrayList<ContentDTO> pageList = new ArrayList<ContentDTO>();
@@ -235,6 +247,8 @@ public class BoardController extends HttpServlet {
 		
 		request.setAttribute("BoardInfo", board);
 		request.setAttribute("UserInfo", user);
+		request.setAttribute("TotalPage", totalPage.size());
+		request.setAttribute("PageNum", pageNum);
 	}
 	
 	private void requestUpdateBoard(HttpServletRequest request) throws IOException {

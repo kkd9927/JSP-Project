@@ -74,12 +74,18 @@
 					</div>
 					
 					<div class="card-content">
+					<%
+						if(loginInfo != null) {
+							if(writerInfo.getId().equals(loginInfo.getId())) {
+					%>
 						<div class="right-align">
-				<!-- 추천 안했을 경우 -->
-							<a href="#" class="black-text"><i class="samll material-icons">favorite_border</i></a>
-				<!-- 추천 했을 경우 -->							
-				<!-- 			<a href="#" class="black-text"><i class="samll material-icons">favorite</i></a> -->
+							<a href="/MyProject/pages/board/edit.content?contentId=<%= contentInfo.getContentId() %>" class="btn-small z-depth-0 yellow darken-3">수정</a>
+							<a href="/MyProject/pages/board/delete.content?contentId=<%= contentInfo.getContentId() %>&userBoard=<%= contentInfo.getBoardId() %>" class="btn-small z-depth-0 blue-grey lighten-2">삭제</a>
 						</div>
+					<%
+							}
+						}
+					%>
 					</div>
 				</div>
 			</div>

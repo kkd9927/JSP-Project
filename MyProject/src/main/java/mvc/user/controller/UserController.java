@@ -2,6 +2,8 @@ package mvc.user.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,6 +17,8 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import mvc.board.model.BoardDAO;
 import mvc.board.model.BoardDTO;
+import mvc.content.model.ContentDAO;
+import mvc.content.model.ContentDTO;
 import mvc.user.model.UserDAO;
 import mvc.user.model.UserDTO;
 
@@ -140,16 +144,52 @@ public class UserController extends HttpServlet {
 	}
 	
 	private void requestGetBoard(HttpServletRequest request) {
-		BoardDAO dao = BoardDAO.getInstance();
+		BoardDAO boardDao = BoardDAO.getInstance();
 		BoardDTO board = new BoardDTO();
+		ContentDAO contentDao = ContentDAO.getInstance();
 		
-		HttpSession session = request.getSession();
+		ArrayList<ContentDTO> totalList = new ArrayList<ContentDTO>();
+		ArrayList<ContentDTO> pageList = new ArrayList<ContentDTO>();
+		List<ArrayList<ContentDTO>> totalPage = new ArrayList<ArrayList<ContentDTO>>();
 		
 		String domain = request.getParameter("userBoard");
 		
-		board = dao.getUserBoard(domain);
+		board = boardDao.getUserBoard(domain);
+		totalList = contentDao.getContentList(domain);
 		
+		int pageNum = 1;
+		if(request.getParameter("page") != null) {
+			pageNum = Integer.parseInt(request.getParameter("page"));
+		}
+		
+		int cnt = 1;
+		int totalCnt = totalList.size();
+		
+		for(int i=0; i<totalList.size(); i++) {
+			pageList.add(totalList.get(i));
+			
+			if(cnt == 10) {
+				totalPage.add(pageList);
+				totalCnt -= cnt;
+				cnt = 1;
+				
+				pageList = new ArrayList<ContentDTO>();
+			} else if(cnt == totalCnt) {
+				totalPage.add(pageList);
+			} else {
+				cnt++;
+			}
+		}
+		
+		HttpSession session = request.getSession();
 		session.setAttribute("BoardInfo", board);
+		
+		if(!totalPage.isEmpty()) {
+			request.setAttribute("ContentList", totalPage.get(pageNum-1));
+		}
+		
+		request.setAttribute("TotalPage", totalPage.size());
+		request.setAttribute("PageNum", pageNum);
 	}
 	
 	private void requestUserUpdate(HttpServletRequest request) throws IOException {
@@ -195,19 +235,34 @@ public class UserController extends HttpServlet {
 	}
 	
 	private void requestUserDelete(HttpServletRequest request) {
-		UserDAO dao = UserDAO.getInstance();
+		UserDAO userDao = UserDAO.getInstance();
 		UserDTO user = null;
+		BoardDAO boardDao = BoardDAO.getInstance();
+		BoardDTO board = new BoardDTO();
 		
 		String id = request.getParameter("id");
 		
 		// id로 유저 객체를 들고와 파일 경로의 이미지 삭제
-		user = dao.getUser(id, null);
+		user = userDao.getUser(id, null);
 		
-		String filePath = getServletContext().getRealPath("/") + "upload\\profile";
-		File img = new File(filePath + "\\" + user.getProfileImg());
+		String filePathUser = getServletContext().getRealPath("/") + "upload\\profile";
+		File img = new File(filePathUser + "\\" + user.getProfileImg());
 		img.delete();
 		
-		dao.deleteUser(id);
+		if(user.getManageBoard() != null) { // 운영하는 게시판이 있으면 게시판 객체를 들고와 파일 경로의 이미지 삭제
+			board = boardDao.getUserBoard(user.getManageBoard());
+			
+			String userId = board.getUserId();
+			String filePathBoard = getServletContext().getRealPath("/") + "upload\\board";
+			File titleImg = new File(filePathBoard + "\\" + board.getTitleImg());
+			File infoImg = new File(filePathBoard + "\\" + board.getInfoImg());
+			titleImg.delete();
+			infoImg.delete();
+			
+			boardDao.deleteBoard(user.getManageBoard(), userId);
+		}
+		
+		userDao.deleteUser(id);
 		
 		// 회원탈퇴 후 기존 로그인정보 삭제
 		HttpSession session = request.getSession();

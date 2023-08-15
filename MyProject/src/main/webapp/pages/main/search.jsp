@@ -39,7 +39,7 @@
 					<div class="row">
 						<div class="col s4">
 							<div class="card-image">
-								<img src="/MyProject/upload/board/<%= boardList.get(i).getInfoImg() %>" width="150" height="150">
+								<img src="/MyProject/upload/board/<%= boardList.get(i).getInfoImg() %>" onerror="this.src='/MyProject/resource/images/no-photo.png'" width="150" height="150">
 							</div>
 						</div>
 						

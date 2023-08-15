@@ -13,7 +13,7 @@
 %>
 <div class="card b-title z-depth-0">
 	<div class="card-image">
-		<img src="/MyProject/upload/board/<%= boardInfo.getTitleImg() %>" height="300">
+		<img src="/MyProject/upload/board/<%= boardInfo.getTitleImg() %>" onerror="this.src='/MyProject/resource/images/no-photo.png'" height="300">
 		<span class="card-title"><a href="/MyProject/pages/board/<%= boardInfo.getBoardId() %>.board?userBoard=<%= boardInfo.getBoardId() %>" class="white-text"><b><%= boardInfo.getTitle() %></b></a></span>
 	</div>
 	

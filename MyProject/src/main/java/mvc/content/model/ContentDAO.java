@@ -99,6 +99,8 @@ public class ContentDAO {
 			
 		}
 		
+		dbClose();
+		
 		return content;
 	}
 	
@@ -106,7 +108,7 @@ public class ContentDAO {
 		ArrayList<ContentDTO> totalList = new ArrayList<ContentDTO>();
 		ContentDTO content = new ContentDTO();
 		
-		String sql = "SELECT * FROM(SELECT ROWNUM AS RN, C.* FROM(SELECT * FROM CONTENT_LIST WHERE BOARD_ID = ? ORDER BY CONTENT_ID) C)";
+		String sql = "SELECT * FROM(SELECT ROWNUM AS RN, C.* FROM(SELECT * FROM CONTENT_LIST WHERE BOARD_ID = ? ORDER BY CONTENT_ID DESC) C)";
 		
 		try {
 			conn = DBConnection.getConnection();
@@ -132,7 +134,55 @@ public class ContentDAO {
 			
 		}
 		
+		dbClose();
+		
 		return totalList;
+	}
+	
+	public void updateContent(ContentDTO content) {
+		String sql = "UPDATE CONTENT_LIST SET BOARD_ID = ?, USER_ID = ?, TITLE = ?, CONTENT = ?, IMAGE = ? WHERE CONTENT_ID = ?";
+		
+		try {
+			conn = DBConnection.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, content.getBoardId());
+			pstmt.setString(2, content.getUserId());
+			pstmt.setString(3, content.getTitle());
+			pstmt.setString(4, content.getContent());
+			pstmt.setString(5, content.getFiles());
+			pstmt.setInt(6, content.getContentId());
+			
+			int rs = pstmt.executeUpdate();
+		} catch(Exception e) {
+			
+		}
+		
+		dbClose();
+	}
+	
+	public void deleteContent(int contentId) {
+		String sql = "DELETE FROM USER_CONTENT WHERE CONTENT_ID = ?";
+		
+		try {
+			conn = DBConnection.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, contentId);
+			
+			int rs1 = pstmt.executeUpdate();
+			
+			if(rs1 == 1) {
+				sql = "DELETE FROM CONTENT_LIST WHERE CONTENT_ID = ?";
+				
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, contentId);
+				
+				int rs2 = pstmt.executeUpdate();
+			}
+		} catch(Exception e) {
+			
+		}
+		
+		dbClose();
 	}
 	
 	private void dbClose() {

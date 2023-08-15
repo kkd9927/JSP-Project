@@ -1,9 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="mvc.user.model.UserDTO, mvc.board.model.BoardDTO" %>
+<%@ page import="mvc.user.model.UserDTO, mvc.board.model.BoardDTO, mvc.content.model.ContentDTO, java.util.ArrayList" %>
 <%
 	UserDTO userInfo = (UserDTO)session.getAttribute("UserInfo");
 	BoardDTO boardInfo = (BoardDTO)session.getAttribute("BoardInfo");
+	
+	ArrayList<ContentDTO> contentList = null;
+	
+	if(request.getAttribute("ContentList") != null) {
+		contentList = (ArrayList<ContentDTO>)request.getAttribute("ContentList");
+	}
+	
+	int totalPage = (Integer)request.getAttribute("TotalPage");
+	int pageNum = (Integer)request.getAttribute("PageNum");
 %>
 <!DOCTYPE html>
 <html>
@@ -29,7 +38,7 @@
 		
 		<div class="row">
 			<div class="col s12 center-align">
-				<img src="/MyProject/upload/profile/<%= userInfo.getProfileImg() %>" width="150" height="150" class="circle">
+				<img src="/MyProject/upload/profile/<%= userInfo.getProfileImg() %>" onerror="this.src='/MyProject/resource/images/no-photo.png'" width="150" height="150" class="circle">
 			</div>
 			
 			<div class="col s12 center-align">
@@ -52,7 +61,7 @@
 					<div class="row">
 						<div class="col s4">
 							<div class="card-image">
-								<img src="/MyProject/upload/board/<%= boardInfo.getInfoImg() %>" width="150" height="150">
+								<img src="/MyProject/upload/board/<%= boardInfo.getInfoImg() %>" onerror="this.src='/MyProject/resource/images/no-photo.png'" width="150" height="150">
 							</div>
 						</div>
 						
@@ -74,7 +83,7 @@
 				%>
 				<div class="row">
 					<div class="col s4">
-						<img src="/MyProject/resource/images/sample.jpg" width="75" height="75" style="visibility: hidden;">
+						<img src="/MyProject/resource/images/no-photo.png" width="75" height="75" style="visibility: hidden;">
 					</div>
 					
 					<div class="col s8">
@@ -88,52 +97,104 @@
 					}
 				%>
 				
-				<br>
-				<hr>
-				<br>
+<!-- 				<br> -->
+<!-- 				<hr> -->
+<!-- 				<br> -->
 				
-				<h6>좋아요 한 글</h6>
-				<table class="highlight">
-					<thead>
-						<tr>
-							<th>제목</th>
-						</tr>
-					</thead>
+<!-- 				<h6>좋아요 한 글</h6> -->
+<!-- 				<table class="highlight"> -->
+<!-- 					<thead> -->
+<!-- 						<tr> -->
+<!-- 							<th>제목</th> -->
+<!-- 						</tr> -->
+<!-- 					</thead> -->
 
-					<tbody>
-						<%
-							for(int i=0; i<3; i++) {
-						%>
-						<tr>
-							<td><a href="#" class="black-text">제목</a></td>
-						</tr>
-						<%
-							}
-						%>
-					</tbody>
-				</table>
+<!-- 					<tbody> -->
+<!-- 						<tr> -->
+<!-- 							<td><a href="#" class="black-text">제목</a></td> -->
+<!-- 						</tr> -->
+<!-- 					</tbody> -->
+<!-- 				</table> -->
 			</div>
 			
 			<div class="col s6">
 				<h6>내가 쓴 글</h6>
 				<%
-				for (int i = 0; i < 3; i++) {
+					if(contentList != null) {
+						for (int i=0; i<contentList.size(); i++) {
 				%>
 				<div class="card">
 					<div class="row">
-						<div class="col s12">
+						<div class="col s4">
+							<div class="card-image">
+								<%
+									if(contentList.get(i).getFiles() != null) {
+										String files[] = contentList.get(i).getFiles().split("/");
+								%>
+								<img src="/MyProject/upload/content/<%= files[0] %>" width="150" height="150">
+								<%
+									} else {
+								%>
+								<img src="/MyProject/resource/images/no-photo.png" width="150" height="150">
+								<%
+									}
+								%>
+							</div>
+						</div>
+						
+						<div class="col s8">
 							<div class="card-content">
-								<a href="#" class="black-text">
-									<h6><b>글 제목</b></h6>
-									<p>글 내용</p>
+								<a href="/MyProject/pages/board/readContent.content?contentId=<%= contentList.get(i).getContentId() %>" class="black-text">
+									<h6><b><%= contentList.get(i).getTitle() %></b></h6>
+									<p><%= contentList.get(i).getContent() %></p>
 								</a>
 							</div>
 						</div>
 					</div>
 				</div>
 				<%
-					}
+						}
 				%>
+				<div class="row">
+					<ul class="pagination center-align">
+						<%
+							if(pageNum == 1) {
+						%>
+						<li class="disabled"><a href="#"><i class="material-icons">chevron_left</i></a></li>
+						<%
+							} else {
+						%>
+						<li><a href="/MyProject/pages/user/info.user?id=<%= userInfo.getId() %>&userBoard=<%= userInfo.getManageBoard() %>&page=<%= pageNum-1 %>"><i class="material-icons">chevron_left</i></a></li>
+						<%
+							}
+						%>
+						<%
+							for(int i=1; i<=totalPage; i++) {
+								if(pageNum == i) {
+						%>
+						<li class="active yellow darken-3"><a href="/MyProject/pages/user/info.user?id=<%= userInfo.getId() %>&userBoard=<%= userInfo.getManageBoard() %>&page=<%= i %>"><%= i %></a></li>
+						<%
+								} else {
+						%>
+						<li><a href="/MyProject/pages/user/info.user?id=<%= userInfo.getId() %>&userBoard=<%= userInfo.getManageBoard() %>&page=<%= i %>"><%= i %></a></li>
+						<%
+								}
+							}
+						%>
+					    <%
+							if(pageNum == totalPage) {
+						%>
+						<li class="disabled"><a href="#"><i class="material-icons">chevron_right</i></a></li>
+						<%
+							} else {
+						%>
+						<li><a href="/MyProject/pages/user/info.user?id=<%= userInfo.getId() %>&userBoard=<%= userInfo.getManageBoard() %>&page=<%= pageNum+1 %>"><i class="material-icons">chevron_right</i></a></li>
+						<%
+								}
+							}
+						%>
+				 	</ul>
+				</div>
 			</div>
 		</div>
 	</div>
