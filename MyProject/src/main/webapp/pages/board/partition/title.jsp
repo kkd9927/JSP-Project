@@ -19,7 +19,7 @@
 	
 	<%
 		if(loginInfo != null) {
-			if(loginInfo.getManageBoard().equals(boardInfo.getBoardId())) {
+			if(loginInfo.getId().equals(boardInfo.getUserId())) {
 	%>
 	<div class="fixed-action-btn title-action-btn">
 		<a class="btn-floating btn-large white">
@@ -27,7 +27,7 @@
 		</a>
 		
 		<ul>
-			<li><a href="/MyProject/pages/board/update.board" class="btn-floating tooltipped title-tooltip white" data-position="bottom" data-tooltip="수정"><i class="black-text material-icons">build</i></a></li>
+			<li><a href="/MyProject/pages/board/update.board?userBoard=<%= boardInfo.getBoardId() %>" class="btn-floating tooltipped title-tooltip white" data-position="bottom" data-tooltip="수정"><i class="black-text material-icons">build</i></a></li>
 			<li><a href="#" class="btn-floating tooltipped title-tooltip white" data-position="bottom" data-tooltip="글 목록"><i class="black-text material-icons">list</i></a></li>
 			<li><a href="/MyProject/pages/board/write.content?domain=<%= boardInfo.getBoardId() %>&userid=<%= loginInfo.getId() %>" class="btn-floating tooltipped title-tooltip white" data-position="bottom" data-tooltip="글 쓰기"><i class="black-text material-icons">create</i></a></li>
 		</ul>

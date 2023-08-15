@@ -3,7 +3,7 @@
 <%@ page import="mvc.user.model.UserDTO, mvc.board.model.BoardDTO, mvc.content.model.ContentDTO, java.util.ArrayList" %>
 <%
 	UserDTO userInfo = (UserDTO)session.getAttribute("UserInfo");
-	BoardDTO boardInfo = (BoardDTO)session.getAttribute("BoardInfo");
+	BoardDTO boardInfo = (BoardDTO)request.getAttribute("BoardInfo");
 	
 	ArrayList<ContentDTO> contentList = null;
 	
@@ -11,8 +11,15 @@
 		contentList = (ArrayList<ContentDTO>)request.getAttribute("ContentList");
 	}
 	
-	int totalPage = (Integer)request.getAttribute("TotalPage");
-	int pageNum = (Integer)request.getAttribute("PageNum");
+	int totalPage = 1;
+	if(request.getAttribute("TotalPage") != null) {
+		totalPage = (Integer)request.getAttribute("TotalPage");
+	}
+	
+	int pageNum = 1;
+	if(request.getAttribute("PageNum") != null) {
+		pageNum = (Integer)request.getAttribute("PageNum");
+	}
 %>
 <!DOCTYPE html>
 <html>
@@ -38,7 +45,7 @@
 		
 		<div class="row">
 			<div class="col s12 center-align">
-				<img src="/MyProject/upload/profile/<%= userInfo.getProfileImg() %>" onerror="this.src='/MyProject/resource/images/no-photo.png'" width="150" height="150" class="circle">
+				<img src="/MyProject/upload/profile/<%= userInfo.getProfileImg() %>" onerror="this.src='/MyProject/resource/images/basic_profile_img.jpg'" width="150" height="150" class="circle">
 			</div>
 			
 			<div class="col s12 center-align">

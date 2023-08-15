@@ -49,6 +49,7 @@ public class BoardController extends HttpServlet {
 			
 			rd.forward(request, response);
 		} else if(command.equals("/pages/main/main.board") || command.equals("/pages/main/main.jsp")) {
+			requestGetBoard(request);
 			requestGetList(request);
 			RequestDispatcher rd = request.getRequestDispatcher("/pages/main/boardList.jsp");
 			rd.forward(request, response);
@@ -62,6 +63,7 @@ public class BoardController extends HttpServlet {
 			rd.forward(request, response);
 		} else if(command.equals("/pages/board/update.board")) {
 			requestGetCategory(request);
+			requestGetBoard(request);
 			RequestDispatcher rd = request.getRequestDispatcher("updateForm.jsp");
 			rd.forward(request, response);
 		} else if(command.equals("/pages/board/updateSend.board")) {
@@ -85,15 +87,14 @@ public class BoardController extends HttpServlet {
 	}
 	
 	private boolean requestCreateBoard(HttpServletRequest request) throws IOException {
-		BoardDAO dao = BoardDAO.getInstance();
+		BoardDAO boardDao = BoardDAO.getInstance();
 		BoardDTO board = new BoardDTO();
 		
-		if(dao.getUserBoard(request.getParameter("domain")) == null) {
-			String filePath = getServletContext().getRealPath("/") + "upload\\board";
-			int fileSize = 5 * 1024 * 1024;
-			
-			MultipartRequest multi = new MultipartRequest(request, filePath, fileSize, "UTF-8", new DefaultFileRenamePolicy());
-			
+		String filePath = getServletContext().getRealPath("/") + "upload\\board";
+		int fileSize = 5 * 1024 * 1024;
+		MultipartRequest multi = new MultipartRequest(request, filePath, fileSize, "UTF-8", new DefaultFileRenamePolicy());
+		
+		if(boardDao.getUserBoard(multi.getParameter("domain")).getBoardId() == null) {
 			String domain = multi.getParameter("domain");
 			String title = multi.getParameter("title");
 			String category = multi.getParameter("category");
@@ -121,7 +122,7 @@ public class BoardController extends HttpServlet {
 			board.setTitleImg(titleImgName);
 			board.setInfoImg(infoImgName);
 			
-			dao.createBoard(board);
+			boardDao.createBoard(board);
 			
 			// 기존 로그인 정보 삭제 후 변경된 정보(게시판 추가)로 업데이트
 			UserDAO userDAO = UserDAO.getInstance();
@@ -131,6 +132,7 @@ public class BoardController extends HttpServlet {
 			
 			user = userDAO.getUser(id, null);
 			session.setAttribute("UserInfo", user);
+			session.setAttribute("BoardInfo", board);
 			
 			return true;
 		} else {
@@ -211,7 +213,15 @@ public class BoardController extends HttpServlet {
 		ArrayList<ContentDTO> pageList = new ArrayList<ContentDTO>();
 		List<ArrayList<ContentDTO>> totalPage = new ArrayList<ArrayList<ContentDTO>>();
 		
-		String domain = request.getParameter("userBoard");
+		HttpSession session = request.getSession();
+		UserDTO login = (UserDTO)session.getAttribute("UserInfo");
+		
+		String domain;
+		if(session.getAttribute("UserInfo") != null) {
+			domain = login.getManageBoard();
+		} else {
+			domain = request.getParameter("userBoard");
+		}
 		
 		board = boardDao.getUserBoard(domain);
 		user = userDao.getUser(board.getUserId(), null);
@@ -252,8 +262,10 @@ public class BoardController extends HttpServlet {
 	}
 	
 	private void requestUpdateBoard(HttpServletRequest request) throws IOException {
-		BoardDAO dao = BoardDAO.getInstance();
+		BoardDAO boardDao = BoardDAO.getInstance();
 		BoardDTO board = new BoardDTO();
+		UserDAO userDao = UserDAO.getInstance();
+		UserDTO user = new UserDTO();
 		
 		String filePath = getServletContext().getRealPath("/") + "upload\\board";
 		int fileSize = 5 * 1024 * 1024;
@@ -286,7 +298,7 @@ public class BoardController extends HttpServlet {
 		board.setDescription(description);
 		
 		if(titleImgName.equals("")) { // 타이틀 이미지가 공백일 때 기존 이미지 불러오기
-			BoardDTO dto = dao.getUserBoard(domain);
+			BoardDTO dto = boardDao.getUserBoard(domain);
 			titleImgName = dto.getTitleImg();
 			board.setTitleImg(titleImgName);
 		} else {
@@ -294,22 +306,21 @@ public class BoardController extends HttpServlet {
 		}
 		
 		if(infoImgName.equals("")) { // 로고 이미지가 공백일 때 기존 이미지 불러오기
-			BoardDTO dto = dao.getUserBoard(domain);
+			BoardDTO dto = boardDao.getUserBoard(domain);
 			infoImgName = dto.getInfoImg();
 			board.setInfoImg(infoImgName);
 		} else {
 			board.setInfoImg(infoImgName);
 		}
 		
-		dao.updateBoard(board);
+		boardDao.updateBoard(board);
 		
 		// 기존 게시판 정보 삭제 후 변경된 정보로 업데이트
 		board = new BoardDTO();
-		HttpSession session = request.getSession();
-		session.removeAttribute("BoardInfo");
-		
-		board = dao.getUserBoard(domain);
-		session.setAttribute("BoardInfo", board);
+		board = boardDao.getUserBoard(domain);
+		user = userDao.getUser(board.getUserId(), null);
+		request.setAttribute("BoardInfo", board);
+		request.setAttribute("UserInfo", user);
 	}
 	
 	private void requestDeleteBoard(HttpServletRequest request) {
@@ -333,7 +344,6 @@ public class BoardController extends HttpServlet {
 		// 게시판삭제 후 기존 세션 삭제
 		HttpSession session = request.getSession();
 		session.removeAttribute("UserInfo");
-		session.removeAttribute("BoardInfo");
 		
 		// 유저 정보만 재생성
 		UserDAO userDao = UserDAO.getInstance();

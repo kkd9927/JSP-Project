@@ -10,8 +10,16 @@
 	
 	UserDTO userInfo = (UserDTO)request.getAttribute("UserInfo");
 	BoardDTO boardInfo = (BoardDTO)request.getAttribute("BoardInfo");
-	int totalPage = (Integer)request.getAttribute("TotalPage");
-	int pageNum = (Integer)request.getAttribute("PageNum");
+
+	int totalPage = 1;
+	if(request.getAttribute("TotalPage") != null) {
+		totalPage = (Integer)request.getAttribute("TotalPage");
+	}
+	
+	int pageNum = 1;
+	if(request.getAttribute("PageNum") != null) {
+		pageNum = (Integer)request.getAttribute("PageNum");
+	}
 
 	if(contentList != null) {
 		for(int i=0; i<contentList.size(); i++) {

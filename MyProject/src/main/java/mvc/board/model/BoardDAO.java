@@ -224,32 +224,39 @@ public class BoardDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, userId);
 			
-			int rs = pstmt.executeUpdate();
+			int result = pstmt.executeUpdate();
 			
-			if(rs == 1) {
-				sql = "DELETE FROM USER_CONTENT WHERE USER_ID = ?";
+			if(result == 1) {
+				sql = "SELECT * FROM USER_CONTENT WHERE USER_ID = ?";
 				
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, userId);
 				
-				rs = pstmt.executeUpdate();
+				rs = pstmt.executeQuery();
 				
-				if(rs == 1) {
-					sql = "DELETE FROM CONTENT_LIST WHERE BOARD_ID = ?";
+				if(rs.next()) {
+					sql = "DELETE FROM USER_CONTENT WHERE USER_ID = ?";
 					
 					pstmt = conn.prepareStatement(sql);
 					pstmt.setString(1, domain);
 					
-					rs = pstmt.executeUpdate();
+					result = pstmt.executeUpdate();
 					
-					if(rs == 1) {
-						sql = "DELETE FROM BOARD_LIST WHERE BOARD_ID = ?";
+					if(result == 1) {
+						sql = "DELETE FROM CONTENT_LIST WHERE BOARD_ID = ?";
 						
 						pstmt = conn.prepareStatement(sql);
 						pstmt.setString(1, domain);
 						
-						rs = pstmt.executeUpdate();
+						result = pstmt.executeUpdate();
 					}
+				} else {
+					sql = "DELETE FROM BOARD_LIST WHERE BOARD_ID = ?";
+					
+					pstmt = conn.prepareStatement(sql);
+					pstmt.setString(1, domain);
+					
+					result = pstmt.executeUpdate();
 				}
 			}
 		} catch(Exception e) {

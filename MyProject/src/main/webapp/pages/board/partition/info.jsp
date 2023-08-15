@@ -19,7 +19,7 @@
 		<p>
 			<a href="/MyProject/pages/user/info.user?id=<%= userInfo.getId() %>&userBoard=<%= userInfo.getManageBoard() %>" class="black-text">
 				<span class="btn-floating btn-small">
-					<img src="/MyProject/upload/profile/<%= userInfo.getProfileImg() %>">
+					<img src="/MyProject/upload/profile/<%= userInfo.getProfileImg() %>" onerror="this.src='/MyProject/resource/images/basic_profile_img.jpg'">
 				</span>
 				<%= userInfo.getNickname() %>
 			</a>

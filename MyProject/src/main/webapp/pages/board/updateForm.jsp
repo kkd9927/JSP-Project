@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="mvc.board.model.BoardDTO, java.util.ArrayList" %>
 <%
-	BoardDTO boardInfo = (BoardDTO)session.getAttribute("BoardInfo");
+	BoardDTO boardInfo = (BoardDTO)request.getAttribute("BoardInfo");
 	ArrayList<String> category = (ArrayList<String>)request.getAttribute("category");
 %>
 <!DOCTYPE html>

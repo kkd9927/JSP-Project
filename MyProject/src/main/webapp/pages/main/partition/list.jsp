@@ -20,7 +20,7 @@
 	<div class="col s3">
 		<div class="card">
 		    <div class="card-image">
-		    	<img class="activator" src="/MyProject/upload/board/<%= boardList.get(i).getInfoImg() %>" onerror="this.src='/MyProject/resource/images/no-photo.png'">
+		    	<img class="activator" src="/MyProject/upload/board/<%= boardList.get(i).getInfoImg() %>" onerror="this.src='/MyProject/resource/images/no-photo.png'" height="200">
 		    </div>
 		    <div class="card-content">
 		    	<span class="card-title activator grey-text text-darken-4"><%= boardList.get(i).getTitle() %><i class="material-icons right">add</i></span>

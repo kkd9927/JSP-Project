@@ -44,7 +44,7 @@
 							<a href="#" class="black-text">
 								<%= writerInfo.getNickname() %>
 								<span class="btn-floating btn-small">
-									<img src="/MyProject/upload/profile/<%= writerInfo.getProfileImg() %>">
+									<img src="/MyProject/upload/profile/<%= writerInfo.getProfileImg() %>" onerror="this.src='/MyProject/resource/images/basic_profile_img.jpg'">
 								</span>
 							</a>
 						</p>

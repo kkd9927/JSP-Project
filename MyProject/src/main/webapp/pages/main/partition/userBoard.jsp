@@ -3,7 +3,7 @@
 <%@ page import="mvc.user.model.UserDTO, mvc.board.model.BoardDTO" %>
 <%
 	UserDTO userInfo = (UserDTO)session.getAttribute("UserInfo");
-	BoardDTO boardInfo = (BoardDTO)session.getAttribute("BoardInfo");
+	BoardDTO boardInfo = (BoardDTO)request.getAttribute("BoardInfo");
 	
 	if(userInfo != null) {
 		String userBoard = userInfo.getManageBoard();

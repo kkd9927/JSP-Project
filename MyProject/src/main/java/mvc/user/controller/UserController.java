@@ -122,7 +122,7 @@ public class UserController extends HttpServlet {
 			board = boardDao.getUserBoard(user.getManageBoard());
 			
 			session.setAttribute("UserInfo", user);
-			session.setAttribute("BoardInfo", board);
+			request.setAttribute("BoardInfo", board);
 			
 			String refererURL = request.getParameter("url"); // 요청을 보내기 전 경로, 예) http://localhost:8080/MyProject/pages/main/main.jsp
 			String urlArr[] = refererURL.split(request.getContextPath()); // 위 경로에서 ContextPath(/MyProject)를 기준으로 문자열을 잘라 문자열 배열 리턴
@@ -181,13 +181,11 @@ public class UserController extends HttpServlet {
 			}
 		}
 		
-		HttpSession session = request.getSession();
-		session.setAttribute("BoardInfo", board);
-		
 		if(!totalPage.isEmpty()) {
 			request.setAttribute("ContentList", totalPage.get(pageNum-1));
 		}
 		
+		request.setAttribute("BoardInfo", board);
 		request.setAttribute("TotalPage", totalPage.size());
 		request.setAttribute("PageNum", pageNum);
 	}
