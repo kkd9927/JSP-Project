@@ -28,7 +28,7 @@ public class ContentDAO {
 	public int insertContent(ContentDTO content) {
 		int contentId = 0;
 		
-		String sql = "INSERT INTO CONTENT_LIST VALUES(?, AUTO_INCREMENT.NEXTVAL, ?, TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:mi'), ?, ?, ?, ?)";
+		String sql = "INSERT INTO BOARD_CONTENT VALUES(?, AUTO_INCREMENT.NEXTVAL, ?, TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:mi'), ?, ?, ?, ?)";
 		
 		try {
 			conn = DBConnection.getConnection();
@@ -43,7 +43,7 @@ public class ContentDAO {
 			int rsInsert = pstmt.executeUpdate();
 			
 			if(rsInsert == 1) {
-				sql = "SELECT * FROM CONTENT_LIST WHERE BOARD_ID = ? AND USER_ID = ? AND TITLE = ?";
+				sql = "SELECT * FROM BOARD_CONTENT WHERE BOARD_ID = ? AND USER_ID = ? AND TITLE = ?";
 				
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, content.getBoardId());
@@ -76,7 +76,7 @@ public class ContentDAO {
 	public ContentDTO getContent(int contentId) {
 		ContentDTO content = new ContentDTO();
 		
-		String sql = "SELECT * FROM CONTENT_LIST WHERE CONTENT_ID = ?";
+		String sql = "SELECT * FROM BOARD_CONTENT WHERE CONTENT_ID = ?";
 		
 		try {
 			conn = DBConnection.getConnection();
@@ -108,7 +108,7 @@ public class ContentDAO {
 		ArrayList<ContentDTO> totalList = new ArrayList<ContentDTO>();
 		ContentDTO content = new ContentDTO();
 		
-		String sql = "SELECT * FROM(SELECT ROWNUM AS RN, C.* FROM(SELECT * FROM CONTENT_LIST WHERE BOARD_ID = ? ORDER BY CONTENT_ID DESC) C)";
+		String sql = "SELECT * FROM(SELECT ROWNUM AS RN, C.* FROM(SELECT * FROM BOARD_CONTENT WHERE BOARD_ID = ? ORDER BY CONTENT_ID DESC) C)";
 		
 		try {
 			conn = DBConnection.getConnection();
@@ -140,7 +140,7 @@ public class ContentDAO {
 	}
 	
 	public void updateContent(ContentDTO content) {
-		String sql = "UPDATE CONTENT_LIST SET BOARD_ID = ?, USER_ID = ?, TITLE = ?, CONTENT = ?, IMAGE = ? WHERE CONTENT_ID = ?";
+		String sql = "UPDATE BOARD_CONTENT SET BOARD_ID = ?, USER_ID = ?, TITLE = ?, CONTENT = ?, IMAGE = ? WHERE CONTENT_ID = ?";
 		
 		try {
 			conn = DBConnection.getConnection();
@@ -171,7 +171,7 @@ public class ContentDAO {
 			int rs1 = pstmt.executeUpdate();
 			
 			if(rs1 == 1) {
-				sql = "DELETE FROM CONTENT_LIST WHERE CONTENT_ID = ?";
+				sql = "DELETE FROM BOARD_CONTENT WHERE CONTENT_ID = ?";
 				
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, contentId);

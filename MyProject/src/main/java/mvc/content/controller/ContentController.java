@@ -121,6 +121,7 @@ public class ContentController extends HttpServlet {
 		int contentId = dao.insertContent(content);
 		
 		request.setAttribute("contentId", contentId);
+		
 	}
 	
 	private void requestGetContent(HttpServletRequest request) {
